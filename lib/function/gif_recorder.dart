@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -13,8 +14,63 @@ class GifRecorder extends StatefulWidget {
 class _GifRecorderState extends State<GifRecorder> {
   bool _recording = false;
   bool _exporting = false;
-  ScreenRecorderController controller = ScreenRecorderController();
+  final ScreenRecorderController controller = ScreenRecorderController();
   bool get canExport => controller.exporter.hasFrames;
+
+  // GIFの再生時間（秒単位）
+  final int gifDuration = 2;
+
+  Future<void> _exportGif() async {
+    setState(() {
+      _exporting = true;
+    });
+
+    // GIFをエクスポート
+    final gif = await controller.exporter.exportGif();
+    if (gif == null) {
+      throw Exception("Failed to export GIF");
+    }
+
+    setState(() {
+      _exporting = false;
+    });
+
+    // エクスポートしたGIFをダイアログで表示
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Exported GIF"),
+          content: Image.memory(Uint8List.fromList(gif)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _startRecording() {
+    controller.start();
+    setState(() {
+      _recording = true;
+    });
+
+    // GIF再生時間後に録画停止してGIFをエクスポート
+    Future.delayed(Duration(seconds: gifDuration), () async {
+      if (_recording) {
+        controller.stop();
+        setState(() {
+          _recording = false;
+        });
+        await _exportGif(); // 録画停止後にGIFをエクスポート
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,18 +85,23 @@ class _GifRecorderState extends State<GifRecorder> {
               if (_exporting)
                 const Center(child: CircularProgressIndicator())
               else ...[
-                // GIFを録画するためのImage.assetで画像を表示
                 ScreenRecorder(
                   height: 500,
                   width: 500,
                   controller: controller,
                   child: GestureDetector(
-                    onTap: () {
-                      // 画像のタップやアニメーションの変更を検出する場合はここに処理を追加
-                    },
-                    child: Image.asset(
-                      'assets/images/tumblr_inline_pk03u2iESS1qa5y5a_500.gif',
-                      fit: BoxFit.cover,
+                    child: Stack(
+                      children: [
+                        Container(
+                          color: Colors.blue,
+                          height: 600,
+                          width: 500,
+                        ),
+                        Image.asset(
+                          'assets/images/tumblr_inline_pk03u2iESS1qa5y5a_500.gif',
+                          fit: BoxFit.cover,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -48,12 +109,7 @@ class _GifRecorderState extends State<GifRecorder> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      onPressed: () {
-                        controller.start();
-                        setState(() {
-                          _recording = true;
-                        });
-                      },
+                      onPressed: _startRecording,
                       child: const Text('Start Recording'),
                     ),
                   ),
@@ -61,82 +117,17 @@ class _GifRecorderState extends State<GifRecorder> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         controller.stop();
                         setState(() {
                           _recording = false;
                         });
+                        await _exportGif(); // 手動停止時もGIFをエクスポート
                       },
                       child: const Text('Stop Recording'),
                     ),
                   ),
                 if (canExport && !_exporting)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        setState(() {
-                          _exporting = true;
-                        });
-                        var frames = await controller.exporter.exportFrames();
-                        if (frames == null) {
-                          throw Exception();
-                        }
-                        setState(() => _exporting = false);
-                        showDialog(
-                          context: context as dynamic,
-                          builder: (context) {
-                            return AlertDialog(
-                              content: SizedBox(
-                                height: 500,
-                                width: 500,
-                                child: ListView.builder(
-                                  padding: const EdgeInsets.all(8.0),
-                                  itemCount: frames.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final image = frames[index].image;
-                                    return SizedBox(
-                                      height: 150,
-                                      child: Image.memory(
-                                        image.buffer.asUint8List(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: const Text('Export as frames'),
-                    ),
-                  ),
-                if (canExport && !_exporting) ...[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        setState(() {
-                          _exporting = true;
-                        });
-                        var gif = await controller.exporter.exportGif();
-                        if (gif == null) {
-                          throw Exception();
-                        }
-                        setState(() => _exporting = false);
-                        showDialog(
-                          context: context as dynamic,
-                          builder: (context) {
-                            return AlertDialog(
-                              content: Image.memory(Uint8List.fromList(gif)),
-                            );
-                          },
-                        );
-                      },
-                      child: const Text('Export as GIF'),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
@@ -147,8 +138,7 @@ class _GifRecorderState extends State<GifRecorder> {
                       },
                       child: const Text('Clear recorded data'),
                     ),
-                  )
-                ]
+                  ),
               ]
             ],
           ),
