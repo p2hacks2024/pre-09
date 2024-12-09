@@ -1,8 +1,11 @@
 import 'dart:ui';
 
 class AppColor {
+  // ignore: library_private_types_in_public_api
   static final _Brand brand = _Brand();
+  // ignore: library_private_types_in_public_api
   static final _Text text = _Text();
+  // ignore: library_private_types_in_public_api
   static final _Ui ui = _Ui();
 }
 
