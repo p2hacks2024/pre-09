@@ -1,4 +1,5 @@
 import 'package:ebidence/function/gif_recorder.dart';
+import 'package:ebidence/function/x_share.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,7 +33,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: GifRecorder(),
+      home: XShare(
+        text: "テストテスト\n",
+        url: "https://ibb.co/HDj2sG0\n",
+        hashtags: ['p2hacks'],
+      ),
     );
   }
 }
