@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       home: XShare(
         text: "テストテスト\n",
-        url: "https://ibb.co/HDj2sG0\n",
+        url: "https://i.ibb.co/TBsTSPZ/2024-12-09-14-22-40.png\n",
         hashtags: ['p2hacks'],
       ),
     );
