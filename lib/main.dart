@@ -1,8 +1,15 @@
+import 'package:ebidence/firebase_options.dart';
 import 'package:ebidence/function/gif_recorder.dart';
 import 'package:ebidence/function/x_share.dart';
+import 'package:ebidence/view/developer/cloud_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -33,11 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: XShare(
-        text: "テストテスト\n",
-        url: "https://i.ibb.co/TBsTSPZ/2024-12-09-14-22-40.png\n",
-        hashtags: ['p2hacks'],
-      ),
+      home: CloudStorage(),
     );
   }
 }
