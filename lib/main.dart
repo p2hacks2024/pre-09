@@ -1,4 +1,5 @@
-import 'package:ebidence/storage/local_storage.dart';
+import 'package:ebidence/storage/gamestate/debug_game_screen.dart';
+import 'package:ebidence/storage/wrongdata/wrong_storage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const LocalStorage(title: 'Counter Example with JSON'),
+      home: DebugGameScreen(),
     );
   }
 }

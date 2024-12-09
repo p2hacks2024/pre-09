@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ebidence/storage/wrong_data.dart';
+import 'package:ebidence/storage/wrongdata/wrong_data.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,6 +64,11 @@ class _WrongStorageState extends State<WrongStorage> {
   }
 
   // 3の倍数のデータを更新
+  /*
+  _wrongDataList の中から wrongCount が3の倍数の要素を抽出
+  抽出した要素から word だけを取り出して、新しいリストを生成
+  _multiplesOfThreeWords にそのリストを代入
+  */
   void _updateMultiplesOfThreeWords() {
     _multiplesOfThreeWords = _wrongDataList
         .where((data) => data.wrongCount % 3 == 0)
