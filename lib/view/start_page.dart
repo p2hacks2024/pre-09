@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:ebidence/constant/app_color.dart';
-import 'package:ebidence/constant/app_size.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
