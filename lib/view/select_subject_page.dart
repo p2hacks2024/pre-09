@@ -105,12 +105,35 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
           ],
       ),
       backgroundColor: AppColor.brand.primary,
-      body:Padding(
-        padding: EdgeInsets.only(
-          top: deviceHeight/13,
-          right: deviceWidth/6,
-          left: deviceWidth/6,
-          bottom: deviceHeight/13,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.black,
+                side: const BorderSide(
+                  color: Colors.black,
+                ),
+                minimumSize: Size(deviceWidth/3, deviceHeight/10),
+              ),
+              onPressed: (){
+                showDialog(
+                  context: context, 
+                  builder: (BuildContext context){
+                    return const AlertDialog();
+                  },
+                );
+              },
+              child: const Text(
+                "英語",
+                style: TextStyle(
+                  fontSize: 40,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -8,7 +8,7 @@ class AppColor {
 
 class _Brand {
   final Color primary = const Color(0xFFFFFFFF);
-  final Color secondary = const Color(0xFFFFAB40);
+  final Color secondary = const Color(0xFFFFF9D68);
   final Color secondaryLight = const Color(0xFFFFC966);
   final Color tertiary = const Color(0xFF9ACCE2);
 }
