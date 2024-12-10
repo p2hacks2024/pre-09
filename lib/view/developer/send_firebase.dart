@@ -2,50 +2,71 @@ import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'dart:ui' as ui;
+
+import 'package:flutter/rendering.dart';
 
 class SendFirebase extends StatefulWidget {
   const SendFirebase({super.key});
 
   @override
-  State<SendFirebase> createState() => _CloudStorageState();
+  State<SendFirebase> createState() => _SendFirebaseState();
 }
 
-class _CloudStorageState extends State<SendFirebase> {
+class _SendFirebaseState extends State<SendFirebase> {
   final storageRef = FirebaseStorage.instance.ref();
-  late final Reference cornRef;
+  late final Reference containerRef;
+
+  final GlobalKey _repaintBoundaryKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    cornRef = storageRef.child("2d00f709f9ffc6434801ec32fa056089.jpg");
+    containerRef = storageRef.child("container_image.jpg");
   }
 
-  Future<Uint8List> getImageDataFromAssets(String path) async {
-    // assets から画像データを Uint8List として読み込む
-    final byteData = await rootBundle.load(path);
-    return byteData.buffer.asUint8List();
-  }
-
-  Future<void> uploadImageAndSaveToFirestore() async {
+  /// Containerを画像としてレンダリングし、Uint8List形式で取得
+  Future<Uint8List> _captureContainerAsImage() async {
     try {
-      // 画像データを取得
-      Uint8List data = await getImageDataFromAssets(
-          'assets/images/2d00f709f9ffc6434801ec32fa056089.jpg');
+      // RepaintBoundaryのkeyからRenderRepaintBoundaryを取得
+      RenderRepaintBoundary boundary = _repaintBoundaryKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+
+      // 描画を画像としてレンダリング
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+
+      // 画像をByteDataに変換
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+
+      // ByteDataをUint8Listに変換
+      return byteData!.buffer.asUint8List();
+    } catch (e) {
+      throw Exception("画像のレンダリングに失敗しました: $e");
+    }
+  }
+
+  Future<void> uploadContainerImageAndSaveToFirestore() async {
+    try {
+      // Containerを画像としてキャプチャ
+      Uint8List containerImage = await _captureContainerAsImage();
 
       // Firebase Storage にアップロード
-      await cornRef.putData(data);
+      await containerRef.putData(containerImage);
 
       // アップロードされた画像のダウンロードURLを取得
-      final String downloadUrl = await cornRef.getDownloadURL();
+      final String downloadUrl = await containerRef.getDownloadURL();
 
-      // Firestore に保存
-      await FirebaseFirestore.instance
+      // Firestore に保存し、DocumentReferenceを取得
+      DocumentReference docRef = await FirebaseFirestore.instance
           .collection('images')
           .add({'url': downloadUrl});
 
+      // デバッグコンソールにドキュメントIDを表示
+      debugPrint('Firestoreに保存したドキュメントID: ${docRef.id}');
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('画像とURLの保存に成功しました！')),
+        SnackBar(content: Text('保存成功！ドキュメントID: ${docRef.id}')),
       );
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -64,16 +85,34 @@ class _CloudStorageState extends State<SendFirebase> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/2d00f709f9ffc6434801ec32fa056089.jpg',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
+            RepaintBoundary(
+              key: _repaintBoundaryKey,
+              child: Container(
+                width: 200,
+                height: 200,
+                color: Colors.blue,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/2d00f709f9ffc6434801ec32fa056089.jpg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    Center(
+                      child: Text(
+                        'Hello, World!',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 16),
             TextButton(
-              onPressed: uploadImageAndSaveToFirestore,
-              child: const Text('アップロードしてFirestoreに保存'),
+              onPressed: uploadContainerImageAndSaveToFirestore,
+              child: const Text('ContainerをアップロードしてFirestoreに保存'),
             ),
           ],
         ),
