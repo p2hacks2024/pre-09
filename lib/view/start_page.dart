@@ -49,21 +49,18 @@ class _StartPageState extends State<StartPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(
-                  width: deviceWidth/10,
-                  height: deviceWidth/10,
-                  child: const Placeholder(),
+                Image.asset(
+                  'assets/images/shrimp.png',
+                  width: deviceWidth/7,
                 ),
-                SizedBox(
-                  width: deviceWidth/10,
-                  height: deviceWidth/10,
-                  child: const Placeholder(),
+                Image.asset(
+                  'assets/images/shrimp.png',
+                  width: deviceWidth/7,
                 ),
-                SizedBox(
-                  width: deviceWidth/10,
-                  height: deviceWidth/10,
-                  child: const Placeholder(),
-                )
+                Image.asset(
+                  'assets/images/shrimp.png',
+                  width: deviceWidth/7,
+                ),
               ],
             ),
             Row(
