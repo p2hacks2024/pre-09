@@ -38,7 +38,7 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
                 borderRadius: BorderRadius.circular(150),
                 child: Image.asset(
                 'assets/images/logo.png',
-                height: deviceHeight/8,
+                height: deviceHeight/7,
               ),
           ),
         ),
@@ -101,22 +101,23 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
               }, 
               icon: const Icon(Icons.help_outline_rounded)
             ),
-            Padding(padding: EdgeInsets.all(deviceWidth/70)),
+            Padding(padding: EdgeInsets.all(deviceWidth/100)),
           ],
       ),
       backgroundColor: AppColor.brand.primary,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Padding(padding: EdgeInsets.all(deviceHeight/40)),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.black,
                 side: const BorderSide(
                   color: Colors.black,
+                  width: 3,
                 ),
-                minimumSize: Size(deviceWidth/3, deviceHeight/10),
+                minimumSize: Size(deviceWidth/2, deviceHeight/6),
               ),
               onPressed: (){
                 showDialog(
@@ -126,13 +127,48 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
                   },
                 );
               },
-              child: const Text(
-                "英語",
-                style: TextStyle(
-                  fontSize: 40,
-                ),
-              ),
+              child: const Text("英語",style: TextStyle(fontSize: 40)),
             ),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.black,
+                side: const BorderSide(
+                  color: Colors.black,
+                  width: 3,
+                ),
+                minimumSize: Size(deviceWidth/2, deviceHeight/6),
+              ),
+              onPressed: (){
+                showDialog(
+                  context: context, 
+                  builder: (BuildContext context){
+                    return const AlertDialog();
+                  },
+                );
+              },
+              child: const Text("漢字",
+                style: TextStyle(fontSize: 40)),
+            ),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.black,
+                side: const BorderSide(
+                  color: Colors.black,
+                  width: 3,
+                ),
+                minimumSize: Size(deviceWidth/2, deviceHeight/6),
+              ),
+              onPressed: (){
+                showDialog(
+                  context: context, 
+                  builder: (BuildContext context){
+                    return const AlertDialog();
+                  },
+                );
+              },
+              child: const Text("ドイツ語",style: TextStyle(fontSize: 40)),
+            ),
+            Padding(padding: EdgeInsets.all(deviceHeight/40)),
           ],
         ),
       ),
