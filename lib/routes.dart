@@ -1,5 +1,6 @@
 import 'package:ebidence/function/ogp_link.dart';
 import 'package:ebidence/main.dart';
+import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,21 +11,12 @@ final router = GoRouter(navigatorKey: navigatorKey, routes: [
   GoRoute(
       path: '/',
       builder: (context, state) {
-        return const OgpLink();
+        return const SendFirebase();
       }),
   GoRoute(
-    path: '/result',
-    builder: (context, state) => const ResultPage(),
-  ),
-  // GoRoute(path: '/developer', builder: (context, state) => const DeveloperWidgets()),
-  // GoRoute(path: '/register', builder: (context, state) => const RegisterView()),
-  // GoRoute(path: '/nickname', builder: (context, state) => const NicknameView()),
-  // GoRoute(path: '/login', builder: (context, state) => const LoginView()),
-  // GoRoute(path: '/home', builder: (context, state) => const HomeView()),
-  // GoRoute(path: '/call', builder: (context, state) => Call()),
-  // GoRoute(
-  //     path: '/foreground_init',
-  //     builder: (context, state) {
-  //       return const Splash();
-  //     })
+      path: '/result',
+      builder: (context, state) {
+        final String imageId = state.extra as String? ?? '不明なID';
+        return ResultPage(imageId: imageId);
+      }),
 ]);
