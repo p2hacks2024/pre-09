@@ -17,15 +17,18 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.brand.secondary,
+        centerTitle: true,
+        toolbarHeight: deviceHeight/6,
         title: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(150),
                 boxShadow: const [
                   BoxShadow(
-                    color: Colors.black38,
+                    color: Colors.black26,
                     spreadRadius: 1.0,
                     blurRadius: 1.0,
-                    offset: Offset(10,15),
+                    offset: Offset(5,5),
                   )
                 ],
               ),
@@ -33,12 +36,72 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
                 borderRadius: BorderRadius.circular(150),
                 child: Image.asset(
                 'assets/images/logo.png',
-                width: deviceWidth/1.8,
+                height: deviceHeight/8,
               ),
             )
-        )
+        ),
+        leading: IconButton(
+          style: IconButton.styleFrom(
+                    foregroundColor: AppColor.brand.secondary,
+                    backgroundColor: AppColor.brand.primary,
+                    iconSize: deviceWidth/20,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )
+                  ),
+          onPressed: (){
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context){
+                        return const AlertDialog();
+                      },
+                    );
+                  }, 
+          icon: const Icon(Icons.arrow_back_rounded)
+        ),
+        actions: [
+            IconButton(
+              style: IconButton.styleFrom(
+                foregroundColor: AppColor.brand.secondary,
+                backgroundColor: AppColor.brand.primary,
+                iconSize: deviceWidth/20,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )
+              ),
+              onPressed: (){
+                showDialog(
+                  context: context, 
+                  builder: (BuildContext context){
+                    return const AlertDialog();
+                  },
+                );
+              }, 
+              icon: const Icon(Icons.arrow_back_rounded)
+            ),
+            IconButton(
+              style: IconButton.styleFrom(
+                foregroundColor: AppColor.brand.secondary,
+                backgroundColor: AppColor.brand.primary,
+                iconSize: deviceWidth/20,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )
+              ),
+              onPressed: (){
+                showDialog(
+                  context: context, 
+                  builder: (BuildContext context){
+                    return const AlertDialog();
+                  },
+                );
+              }, 
+              icon: const Icon(Icons.arrow_back_rounded)
+            ),
+            Padding(padding: EdgeInsets.all(deviceWidth/70)),
+          ],
       ),
-      backgroundColor: AppColor.brand.secondary,
+      backgroundColor: AppColor.brand.primary,
       body:Padding(
         padding: EdgeInsets.only(
           top: deviceHeight/13,
