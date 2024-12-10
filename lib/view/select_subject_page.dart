@@ -19,7 +19,9 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
       appBar: AppBar(
         backgroundColor: AppColor.brand.secondary,
         centerTitle: true,
+        automaticallyImplyLeading: false,
         toolbarHeight: deviceHeight/6,
+        leadingWidth: deviceWidth/9,
         title: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(150),
@@ -38,27 +40,27 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
                 'assets/images/logo.png',
                 height: deviceHeight/8,
               ),
-            )
+          ),
         ),
         leading: IconButton(
-          style: IconButton.styleFrom(
-                    foregroundColor: AppColor.brand.secondary,
-                    backgroundColor: AppColor.brand.primary,
-                    iconSize: deviceWidth/20,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )
-                  ),
-          onPressed: (){
-                    showDialog(
-                      context: context, 
-                      builder: (BuildContext context){
-                        return const AlertDialog();
-                      },
-                    );
-                  }, 
-          icon: const Icon(Icons.arrow_back_rounded)
-        ),
+            style: IconButton.styleFrom(
+              foregroundColor: AppColor.brand.secondary,
+                backgroundColor: AppColor.brand.primary,
+                iconSize: deviceWidth/20,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )
+              ),
+              onPressed: (){
+                showDialog(
+                  context: context, 
+                  builder: (BuildContext context){
+                    return const AlertDialog();
+                  },
+                );
+              }, 
+              icon: const Icon(Icons.arrow_back_rounded)
+            ),
         actions: [
             IconButton(
               style: IconButton.styleFrom(
@@ -77,8 +79,9 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
                   },
                 );
               }, 
-              icon: const Icon(Icons.arrow_back_rounded)
+              icon: const Icon(Icons.volume_up_rounded)
             ),
+            Padding(padding: EdgeInsets.only(left: deviceWidth/50)),
             IconButton(
               style: IconButton.styleFrom(
                 foregroundColor: AppColor.brand.secondary,
@@ -96,7 +99,7 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
                   },
                 );
               }, 
-              icon: const Icon(Icons.arrow_back_rounded)
+              icon: const Icon(Icons.help_outline_rounded)
             ),
             Padding(padding: EdgeInsets.all(deviceWidth/70)),
           ],
@@ -108,93 +111,6 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
           right: deviceWidth/6,
           left: deviceWidth/6,
           bottom: deviceHeight/13,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: deviceWidth/10,
-                  height: deviceWidth/10,
-                  child: const Placeholder(),
-                ),
-                SizedBox(
-                  width: deviceWidth/10,
-                  height: deviceWidth/10,
-                  child: const Placeholder(),
-                ),
-                SizedBox(
-                  width: deviceWidth/10,
-                  height: deviceWidth/10,
-                  child: const Placeholder(),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  style: IconButton.styleFrom(
-                    foregroundColor: AppColor.brand.secondary,
-                    backgroundColor: AppColor.brand.primary,
-                    iconSize: deviceWidth/18,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )
-                  ),
-                  onPressed: (){
-                    showDialog(
-                      context: context, 
-                      builder: (BuildContext context){
-                        return const AlertDialog();
-                      },
-                    );
-                  },
-                  icon: const Icon(Icons.volume_up_rounded),
-                ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    fixedSize: Size(deviceWidth/5, deviceHeight/9),
-                    foregroundColor: AppColor.brand.secondary,
-                    backgroundColor: AppColor.brand.primary,
-                    textStyle: TextStyle(
-                      fontSize: deviceWidth/23,
-                    ),
-                  ),
-                  onPressed: (){
-                    showDialog(
-                      context: context, 
-                      builder: (BuildContext context){
-                        return const AlertDialog();
-                      },
-                    );
-                  },
-                  child: const Text("START"),
-                  ),
-                IconButton(
-                  style: IconButton.styleFrom(
-                    foregroundColor: AppColor.brand.secondary,
-                    backgroundColor: AppColor.brand.primary,
-                    iconSize: deviceWidth/18,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )
-                  ),
-                  onPressed: (){
-                    showDialog(
-                      context: context, 
-                      builder: (BuildContext context){
-                        return const AlertDialog();
-                      },
-                    );
-                  },
-                  icon: const Icon(Icons.exit_to_app_rounded),
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     );
