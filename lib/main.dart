@@ -1,10 +1,18 @@
+import 'package:ebidence/firebase_options.dart';
 import 'package:ebidence/function/gif_recorder.dart';
 import 'package:ebidence/function/ogp_link.dart';
 import 'package:ebidence/function/x_share.dart';
 import 'package:ebidence/routes.dart';
+import 'package:ebidence/view/developer/send_firebase.dart';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

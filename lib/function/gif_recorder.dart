@@ -39,7 +39,7 @@ class _GifRecorderState extends State<GifRecorder> {
                       // 画像のタップやアニメーションの変更を検出する場合はここに処理を追加
                     },
                     child: Image.asset(
-                      'assets/images/tumblr_inline_pk03u2iESS1qa5y5a_500.gif',
+                      'assets/images/2d00f709f9ffc6434801ec32fa056089.jpg',
                       fit: BoxFit.cover,
                     ),
                   ),
