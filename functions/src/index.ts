@@ -48,8 +48,9 @@ const createHtml = (url: string) => {
     <meta property="og:title" content="ebidence">
     <meta property="og:description" content="">
     <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ebidence-gbc.web.app">
     <meta property="og:site_name" content="ebidence">
-     <meta property="og:image" content="${url}">
+    <meta property="og:image" content="${url}">
     <meta name="twitter:site" content="ebidence">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ebidence">
@@ -57,7 +58,7 @@ const createHtml = (url: string) => {
     <meta name="twitter:image" content="${url}">
   </head>
   <body>
-    <script type="text/javascript">window.location="/${url}_";</script>
+    <script type="text/javascript">location.href = "https://ebidence-gbc.web.app/#/result";</script>
   </body>
 </html>
 `;
