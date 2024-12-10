@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:ebidence/constant/app_color.dart';
-import 'package:ebidence/constant/app_size.dart';
 
 class SelectSubjectPage extends StatefulWidget {
   const SelectSubjectPage({super.key});
@@ -17,19 +16,8 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
     final double deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(),
-      backgroundColor: AppColor.brand.secondary,
-      body:Padding(
-        padding: EdgeInsets.only(
-          top: deviceHeight/13,
-          right: deviceWidth/6,
-          left: deviceWidth/6,
-          bottom: deviceHeight/13,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
+      appBar: AppBar(
+        title: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(150),
                 boxShadow: const [
@@ -48,7 +36,19 @@ class _SelectSubjectPageState extends State<SelectSubjectPage> {
                 width: deviceWidth/1.8,
               ),
             )
-            ),
+        )
+      ),
+      backgroundColor: AppColor.brand.secondary,
+      body:Padding(
+        padding: EdgeInsets.only(
+          top: deviceHeight/13,
+          right: deviceWidth/6,
+          left: deviceWidth/6,
+          bottom: deviceHeight/13,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
