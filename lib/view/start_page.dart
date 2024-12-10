@@ -17,12 +17,12 @@ class _StartPageState extends State<StartPage> {
 
     return Scaffold(
       backgroundColor: AppColor.brand.secondary,
-      body:Padding(
+      body: Padding(
         padding: EdgeInsets.only(
-          top: deviceHeight/13,
-          right: deviceWidth/6,
-          left: deviceWidth/6,
-          bottom: deviceHeight/13,
+          top: deviceHeight / 13,
+          right: deviceWidth / 6,
+          left: deviceWidth / 6,
+          bottom: deviceHeight / 13,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -51,15 +51,15 @@ class _StartPageState extends State<StartPage> {
               children: [
                 Image.asset(
                   'assets/images/shrimp.png',
-                  width: deviceWidth/7,
+                  width: deviceWidth / 7,
                 ),
                 Image.asset(
                   'assets/images/shrimp.png',
-                  width: deviceWidth/7,
+                  width: deviceWidth / 7,
                 ),
                 Image.asset(
                   'assets/images/shrimp.png',
-                  width: deviceWidth/7,
+                  width: deviceWidth / 7,
                 ),
               ],
             ),
@@ -68,17 +68,16 @@ class _StartPageState extends State<StartPage> {
               children: [
                 IconButton(
                   style: IconButton.styleFrom(
-                    foregroundColor: AppColor.brand.secondary,
-                    backgroundColor: AppColor.brand.primary,
-                    iconSize: deviceWidth/18,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )
-                  ),
-                  onPressed: (){
+                      foregroundColor: AppColor.brand.secondary,
+                      backgroundColor: AppColor.brand.primary,
+                      iconSize: deviceWidth / 18,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      )),
+                  onPressed: () {
                     showDialog(
-                      context: context, 
-                      builder: (BuildContext context){
+                      context: context,
+                      builder: (BuildContext context) {
                         return const AlertDialog();
                       },
                     );
@@ -87,36 +86,35 @@ class _StartPageState extends State<StartPage> {
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                    fixedSize: Size(deviceWidth/5, deviceHeight/9),
+                    fixedSize: Size(deviceWidth / 5, deviceHeight / 9),
                     foregroundColor: AppColor.brand.secondary,
                     backgroundColor: AppColor.brand.primary,
                     textStyle: TextStyle(
-                      fontSize: deviceWidth/23,
+                      fontSize: deviceWidth / 23,
                     ),
                   ),
-                  onPressed: (){
+                  onPressed: () {
                     showDialog(
-                      context: context, 
-                      builder: (BuildContext context){
+                      context: context,
+                      builder: (BuildContext context) {
                         return const AlertDialog();
                       },
                     );
                   },
                   child: const Text("START"),
-                  ),
+                ),
                 IconButton(
                   style: IconButton.styleFrom(
-                    foregroundColor: AppColor.brand.secondary,
-                    backgroundColor: AppColor.brand.primary,
-                    iconSize: deviceWidth/18,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )
-                  ),
-                  onPressed: (){
+                      foregroundColor: AppColor.brand.secondary,
+                      backgroundColor: AppColor.brand.primary,
+                      iconSize: deviceWidth / 18,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      )),
+                  onPressed: () {
                     showDialog(
-                      context: context, 
-                      builder: (BuildContext context){
+                      context: context,
+                      builder: (BuildContext context) {
                         return const AlertDialog();
                       },
                     );
