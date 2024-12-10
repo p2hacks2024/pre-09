@@ -32,20 +32,19 @@ class _StartPageState extends State<StartPage> {
                 borderRadius: BorderRadius.circular(150),
                 boxShadow: const [
                   BoxShadow(
+                    blurRadius: 1.0,
                     color: Colors.black38,
                     spreadRadius: 1.0,
-                    blurRadius: 1.0,
-                    offset: Offset(10,15),
-                  )
+                    offset: Offset(10, 10),
+                  ),
                 ],
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(150),
                 child: Image.asset(
-                'assets/images/logo.png',
-                width: deviceWidth/1.8,
+                  'assets/images/logo.png',
+                ),
               ),
-            )
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
