@@ -55,9 +55,9 @@ const createHtml = (docId: string, imageUrl: string) => {
     <meta property="og:site_name" content="ebidence">
     <meta property="og:image" content="${imageUrl}">
     <meta name="twitter:site" content="ebidence">
-  
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ebidence">
-    <meta name="twitter:description" content="">
+    <meta name="twitter:description" content="ebidence">
     <meta name="twitter:image" content="${imageUrl}">
   </head>
   <body>

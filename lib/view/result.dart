@@ -1,53 +1,63 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 class ResultPage extends StatelessWidget {
   final String imageId;
 
-  const ResultPage({super.key, required this.imageId});
+  ResultPage({super.key, required this.imageId});
 
-  Future<String> _fetchImageUrl(String docId) async {
-    final docRef = FirebaseFirestore.instance.collection('images').doc(docId);
-    final docSnap = await docRef.get();
-
-    if (docSnap.exists) {
-      final data = docSnap.data();
-      if (data != null && data['url'] != null) {
-        return data['url']; // Firestore のフィールド名が 'url' の場合
-      }
+  Future<Uint8List> _downloadImage() async {
+    try {
+      log("1");
+      final doc = await FirebaseFirestore.instance
+          .collection("images")
+          .doc(imageId)
+          .get();
+      log("2");
+      final String imageUrl = doc.data()!['url']; // 'url'フィールド名を確認
+      log("3");
+      final httpsReference = FirebaseStorage.instance.refFromURL(imageUrl);
+      log("4");
+      const oneMegabyte = 1024 * 1024;
+      log("5");
+      final Uint8List? data = await httpsReference.getData(oneMegabyte);
+      log("6");
+      return data!;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('');
     }
-    throw Exception('Image URL not found');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('結果画面'),
+        title: const Text('画像表示'),
       ),
-      body: FutureBuilder<String>(
-        future: _fetchImageUrl(imageId),
+      body: FutureBuilder(
+        future: _downloadImage(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('エラーが発生しました: ${snapshot.error}'));
-          } else if (!snapshot.hasData) {
-            return const Center(child: Text('画像が見つかりません'));
-          } else {
-            final imageUrl = snapshot.data!;
-            return Column(
-              children: [
-                const Text('結果画面'),
-                Image.network(
-                  imageUrl,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Text('画像の読み込みに失敗しました');
-                  },
-                ),
-              ],
-            );
           }
+          if (snapshot.hasError) {
+            print(snapshot.error);
+            return const Center(child: Text('エラーが発生しました'));
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: Text('画像が見つかりません'));
+          }
+
+          return Center(
+            child: Image.memory(
+              snapshot.data!,
+            ),
+          );
         },
       ),
     );
