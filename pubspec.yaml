@@ -20,6 +20,7 @@ dependencies:
 
 
   go_router: ^14.6.2
+  google_fonts: ^6.2.1
   intl: ^0.20.1
   screen_recorder: ^0.3.0
   url_launcher: ^6.3.1
@@ -36,7 +37,11 @@ flutter:
   assets:
     - assets/images/
 
+  fonts:
+    - family: NotoSansJP
+      fonts: 
+        - asset: assets/fonts/NotoSansJP-Black.ttf
+
  
   uses-material-design: true
-
  
