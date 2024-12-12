@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:ebidence/routes.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +139,7 @@ class _SendFirebaseState extends State<SendFirebase> {
               onPressed: _docId == null
                   ? null
                   : () {
-                      context.go('/result/${_docId}', extra: _docId);
+                      router.go('/result/${_docId}', extra: _docId);
                     },
               child: const Text('結果画面に遷移'),
             ),

@@ -4,6 +4,7 @@ import 'package:ebidence/function/x_share.dart';
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/viewmodel/quiz.dart';
 import 'package:ebidence/routes.dart';
+import 'package:ebidence/viewmodel/quiz2.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
