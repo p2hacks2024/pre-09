@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class SendFirebase extends StatefulWidget {
@@ -19,6 +20,9 @@ class _SendFirebaseState extends State<SendFirebase> {
   late Reference containerRef;
 
   final GlobalKey _repaintBoundaryKey = GlobalKey();
+
+  // FirestoreのドキュメントIDを保持する変数
+  String? _docId;
 
   @override
   void initState() {
@@ -73,7 +77,11 @@ class _SendFirebaseState extends State<SendFirebase> {
           .collection('images')
           .add({'url': downloadUrl});
 
-      // デバッグコンソールにドキュメントIDと画像名を表示
+      setState(() {
+        _docId = docRef.id; // ドキュメントIDを状態変数に保存
+      });
+
+      // デバッグコンソールにドキュメントIDを表示
       debugPrint('Firestoreに保存したドキュメントID: ${docRef.id}');
       debugPrint('保存した画像名: ${containerRef.name}');
 
@@ -125,6 +133,14 @@ class _SendFirebaseState extends State<SendFirebase> {
             TextButton(
               onPressed: uploadContainerImageAndSaveToFirestore,
               child: const Text('ContainerをアップロードしてFirestoreに保存'),
+            ),
+            TextButton(
+              onPressed: _docId == null
+                  ? null
+                  : () {
+                      context.go('/result/${_docId}', extra: _docId);
+                    },
+              child: const Text('結果画面に遷移'),
             ),
           ],
         ),
