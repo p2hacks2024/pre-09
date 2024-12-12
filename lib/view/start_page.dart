@@ -30,7 +30,10 @@ class _StartPageState extends State<StartPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
+                    width: deviceWidth / 1.5,
+                    height: deviceWidth / 4.8,
                     decoration: BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(150),
                       boxShadow: const [
                         BoxShadow(
@@ -44,7 +47,7 @@ class _StartPageState extends State<StartPage> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(150),
                       child: Image.asset(
-                        'assets/images/logo.png',
+                        'assets/images/ebidence_title.png',
                       ),
                     ),
                   ),
