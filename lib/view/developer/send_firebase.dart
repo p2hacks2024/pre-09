@@ -126,7 +126,7 @@ class _SendFirebaseState extends State<SendFirebase> {
               onPressed: _docId == null
                   ? null
                   : () {
-                      context.go('/result', extra: _docId);
+                      context.go('/result/${_docId}', extra: _docId);
                     },
               child: const Text('結果画面に遷移'),
             ),

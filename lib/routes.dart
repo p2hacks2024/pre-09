@@ -14,9 +14,15 @@ final router = GoRouter(navigatorKey: navigatorKey, routes: [
         return const SendFirebase();
       }),
   GoRoute(
-      path: '/result',
+      path: '/result/:_imageId',
       builder: (context, state) {
-        final String imageId = state.extra as String? ?? '不明なID';
+        final imageId = state.pathParameters['_imageId']!;
+        if (imageId == null) {
+          return Scaffold(
+            body: Center(
+                child: Text('imageIdがnullなんだけどーー')), // imageIdがnullの場合のエラーメッセージ
+          );
+        }
         return ResultPage(imageId: imageId);
       }),
 ]);

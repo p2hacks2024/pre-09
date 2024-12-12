@@ -31,14 +31,18 @@ export const createOgp = onRequest(async (req, res) => {
 
   if (docSnap.exists()) {
     const data = docSnap.data();
+    const imageUrl = data.imageUrl; // Firestoreに保存された画像URL
+    const docId = path; // URLから取得したドキュメントID
+    console.log("Firestoreから取得したデータ:", data);
     res.set("Cache-Control", "public, max-age=600, s-maxage=600");
-    const html = createHtml(data.url);
+    const html = createHtml(docId, imageUrl);
     res.status(200).send(html);
   } else {
     res.status(404).send("404 Not Found");
   }
 });
-const createHtml = (url: string) => {
+
+const createHtml = (docId: string, imageUrl: string) => {
   return `<!DOCTYPE html>
 <html>
   <head>
@@ -48,17 +52,17 @@ const createHtml = (url: string) => {
     <meta property="og:title" content="ebidence">
     <meta property="og:description" content="">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://ebidence-gbc.web.app">
+    <meta property="og:url" content="https://ebidence-gbc.web.app/result/${docId}">
     <meta property="og:site_name" content="ebidence">
-    <meta property="og:image" content="${url}">
+    <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/ebidence-gbc.firebasestorage.app/o/black.png?alt=media&token=84651013-71cc-4c5a-b89f-7c9df1cc2bf3">
     <meta name="twitter:site" content="ebidence">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ebidence">
     <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="${url}">
+    <meta name="twitter:image" content="${imageUrl}">
   </head>
   <body>
-    <script type="text/javascript">location.href = "https://ebidence-gbc.web.app/#/result";</script>
+    <script type="text/javascript">location.href = "https://ebidence-gbc.web.app/#/result/${docId}";</script>
   </body>
 </html>
 `;
