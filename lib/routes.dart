@@ -1,5 +1,3 @@
-import 'package:ebidence/function/ogp_link.dart';
-import 'package:ebidence/main.dart';
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
 import 'package:ebidence/viewmodel/quiz1.dart';
