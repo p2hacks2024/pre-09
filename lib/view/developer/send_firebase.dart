@@ -24,6 +24,7 @@ class _SendFirebaseState extends State<SendFirebase> {
 
   // FirestoreのドキュメントIDを保持する変数
   String? _docId;
+  String? imageUrl;
 
   @override
   void initState() {
@@ -68,7 +69,11 @@ class _SendFirebaseState extends State<SendFirebase> {
       Uint8List containerImage = await _captureContainerAsImage();
 
       // Firebase Storage にアップロード
-      await containerRef.putData(containerImage);
+      await containerRef.putData(
+          containerImage,
+          SettableMetadata(
+            contentType: "image/png",
+          ));
 
       // アップロードされた画像のダウンロードURLを取得
       final String downloadUrl = await containerRef.getDownloadURL();
@@ -77,12 +82,11 @@ class _SendFirebaseState extends State<SendFirebase> {
       DocumentReference docRef = await FirebaseFirestore.instance
           .collection('images')
           .add({'url': downloadUrl});
-
+      
       setState(() {
         _docId = docRef.id; // ドキュメントIDを状態変数に保存
       });
 
-      // デバッグコンソールにドキュメントIDを表示
       debugPrint('Firestoreに保存したドキュメントID: ${docRef.id}');
       debugPrint('保存した画像名: ${containerRef.name}');
 

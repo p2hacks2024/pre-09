@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+
 final router = GoRouter(
     navigatorKey: navigatorKey,
     initialLocation: '/beforequiz',
@@ -78,3 +79,17 @@ final router = GoRouter(
         },
       ),
     ]);
+
+final router = GoRouter(navigatorKey: navigatorKey, routes: [
+  GoRoute(
+      path: '/',
+      builder: (context, state) {
+        return const SendFirebase();
+      }),
+  GoRoute(
+      path: '/result/:_imageId',
+      builder: (context, state) {
+        final imageId = state.pathParameters['_imageId']!;
+        return ResultPage(imageId: imageId);
+      }),
+
