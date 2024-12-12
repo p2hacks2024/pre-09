@@ -17,25 +17,6 @@ final router = GoRouter(
     initialLocation: '/beforequiz',
     routes: [
       GoRoute(
-          path: '/',
-          builder: (context, state) {
-            return const SendFirebase();
-          }),
-      GoRoute(
-        path: '/result/:_imageId',
-        builder: (context, state) {
-          final imageId = state.pathParameters['_imageId']!;
-          if (imageId == null) {
-            return Scaffold(
-              body: Center(
-                  child:
-                      Text('imageIdがnullなんだけどーー')), // imageIdがnullの場合のエラーメッセージ
-            );
-          }
-          return ResultPage(imageId: imageId);
-        },
-      ),
-      GoRoute(
         path: '/beforequiz',
         builder: (context, state) {
           return const Beforequiz();
