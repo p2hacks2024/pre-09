@@ -40,7 +40,7 @@ flutter:
   fonts:
     - family: NotoSansJP
       fonts: 
-        - asset: assets/fonts/NotoSansJP-Black.ttf
+        - asset: assets/fonts/NotoSansJP-Bold.ttf
 
  
   uses-material-design: true
