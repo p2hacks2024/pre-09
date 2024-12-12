@@ -139,7 +139,7 @@ class _StartPageState extends State<StartPage> {
                     return Dialog(
                       backgroundColor: AppColor.brand.primary.withOpacity(0.95),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                         side: const BorderSide(
                           color: Colors.black,
                           width: 3,
