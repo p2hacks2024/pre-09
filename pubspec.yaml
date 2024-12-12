@@ -41,6 +41,9 @@ flutter:
     - family: NotoSansJP
       fonts: 
         - asset: assets/fonts/NotoSansJP-Bold.ttf
+    - family: Inter_28pt
+      fonts: 
+        - asset: assets/fonts/Inter_28pt-ExtraBoldItalic.ttf
 
  
   uses-material-design: true
