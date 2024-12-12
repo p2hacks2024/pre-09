@@ -440,7 +440,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-
   riverpod:
     dependency: transitive
     description:
@@ -449,7 +448,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.1"
-
   rxdart:
     dependency: transitive
     description:
@@ -458,7 +456,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
-
   screen_recorder:
     dependency: "direct main"
     description:
