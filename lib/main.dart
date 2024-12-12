@@ -2,7 +2,7 @@ import 'package:ebidence/firebase_options.dart';
 import 'package:ebidence/function/gif_recorder.dart';
 import 'package:ebidence/function/x_share.dart';
 import 'package:ebidence/view/developer/send_firebase.dart';
-import 'package:ebidence/viewmodel/quiz.dart';
+import 'package:ebidence/viewmodel/quiz1.dart';
 import 'package:ebidence/routes.dart';
 import 'package:ebidence/viewmodel/quiz2.dart';
 

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:video_player/video_player.dart';
 
-class Quiz2 extends StatefulWidget {
-  const Quiz2({super.key});
+class Quiz5 extends StatefulWidget {
+  const Quiz5({super.key});
 
   @override
-  State<Quiz2> createState() => _QuizState();
+  State<Quiz5> createState() => _QuizState();
 }
 
-class _QuizState extends State<Quiz2> {
+class _QuizState extends State<Quiz5> {
   final _controller = TextEditingController();
   final _random = Random();
   String _currentQuestion = '';
@@ -83,7 +83,7 @@ class _QuizState extends State<Quiz2> {
 
   // 動画終了後に次の問題へ遷移
   void _goToNextQuestion() {
-    router.go('/quiz3'); // 次の問題へ遷移
+    router.go('/result'); // 次の問題へ遷移
   }
 
   @override

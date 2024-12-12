@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:video_player/video_player.dart';
 
-class Quiz extends StatefulWidget {
-  const Quiz({super.key});
+class Quiz4 extends StatefulWidget {
+  const Quiz4({super.key});
 
   @override
-  State<Quiz> createState() => _QuizState();
+  State<Quiz4> createState() => _QuizState();
 }
 
-class _QuizState extends State<Quiz> {
+class _QuizState extends State<Quiz4> {
   final _controller = TextEditingController();
   final _random = Random();
   String _currentQuestion = '';
@@ -83,7 +83,7 @@ class _QuizState extends State<Quiz> {
 
   // 動画終了後に次の問題へ遷移
   void _goToNextQuestion() {
-    router.go('/quiz2'); // 次の問題へ遷移
+    router.go('/quiz5'); // 次の問題へ遷移
   }
 
   @override
@@ -97,9 +97,9 @@ class _QuizState extends State<Quiz> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            const Text(
               '次の単語を英語に翻訳してください:',
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 16),
             Text(
@@ -132,7 +132,7 @@ class _QuizState extends State<Quiz> {
             const SizedBox(height: 16),
             if (_isVideoInitialized)
               // 動画の表示
-              Container(
+              SizedBox(
                 width: 200, // 幅を指定
                 height: 150, // 高さを指定
                 child: AspectRatio(
