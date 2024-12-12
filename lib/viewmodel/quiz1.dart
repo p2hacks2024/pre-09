@@ -1,8 +1,9 @@
-import 'package:ebidence/provider/quiz_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// quiz1.dart
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ebidence/provider/quiz_provider.dart';
 import 'package:video_player/video_player.dart';
 
 class Quiz1 extends ConsumerStatefulWidget {
@@ -14,7 +15,7 @@ class Quiz1 extends ConsumerStatefulWidget {
 
 class _QuizState extends ConsumerState<Quiz1> {
   final _controller = TextEditingController();
-  String _feedback = '';
+  final _feedback = ValueNotifier<String>('');
   bool _isCorrect = false;
 
   late VideoPlayerController _videoPlayerController;
@@ -37,7 +38,6 @@ class _QuizState extends ConsumerState<Quiz1> {
       if (_videoPlayerController.value.position ==
           _videoPlayerController.value.duration) {
         _goToNextQuestion();
-        //debugPrint()
       }
     });
   }
@@ -48,50 +48,40 @@ class _QuizState extends ConsumerState<Quiz1> {
     super.dispose();
   }
 
-  void _checkAnswer(String question) {
-    final correctAnswer = QuizData.ebiQuizData[question];
-    setState(() {
-      if (_controller.text.trim().toLowerCase() ==
-          correctAnswer?.toLowerCase()) {
-        _feedback = '正解！';
-        _isCorrect = true;
-      } else {
-        _feedback = '不正解。正しい答えは: $correctAnswer';
-        _isCorrect = false;
-      }
+  void _checkAnswer(String currentQuestion) {
+    final correctAnswer = QuizData.ebiQuizData[currentQuestion];
+    if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
+      _feedback.value = '正解！';
+      _isCorrect = true;
+    } else {
+      _feedback.value = '不正解。正しい答えは: $correctAnswer';
+      _isCorrect = false;
+    }
 
-      if (_isVideoInitialized) {
-        _videoPlayerController
-          ..seekTo(Duration.zero)
-          ..play();
-      }
-    });
+    if (_isVideoInitialized) {
+      _videoPlayerController
+        ..seekTo(Duration.zero)
+        ..play();
+    }
   }
 
   void _goToNextQuestion() {
-    final currentIndex = ref.read(currentQuizIndexProvider);
-    if (currentIndex < 4) {
-      // 次の問題を取得
-      final nextIndex = currentIndex + 1;
-      final questions = ref.read(quizProvider);
-      final nextQuestion = questions[nextIndex];
+    final currentIndex = ref.read(currentQuestionIndexProvider);
+    final totalQuestions = ref.read(quizProvider).length;
 
-      // 次の問題をデバッグコンソールに出力
-      debugPrint('次の問題: $nextQuestion');
-
-      // インデックスを更新し、次の画面に遷移
-      ref.read(currentQuizIndexProvider.notifier).state++;
-      router.go('/quiz${nextIndex + 1}');
+    // 次の問題へ進む
+    if (currentIndex + 1 < totalQuestions) {
+      ref.read(currentQuestionIndexProvider.notifier).state = currentIndex + 1;
+      router.go('/quiz2');
     } else {
-      router.go('/result'); // 全てのクイズ終了後
+      // もし最後の問題に到達した場合は次の画面へ
+      router.go('/quizComplete'); // 例えばクイズ終了画面に遷移
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final questions = ref.watch(quizProvider);
-    final currentIndex = ref.watch(currentQuizIndexProvider);
-    final currentQuestion = questions[currentIndex];
+    final currentQuestion = ref.watch(currentQuestionProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -126,17 +116,22 @@ class _QuizState extends ConsumerState<Quiz1> {
               child: const Text('答えをチェック'),
             ),
             const SizedBox(height: 16),
-            Text(
-              _feedback,
-              style: TextStyle(
-                fontSize: 18,
-                color: _isCorrect ? Colors.green : Colors.red,
-              ),
-              textAlign: TextAlign.center,
+            ValueListenableBuilder<String>(
+              valueListenable: _feedback,
+              builder: (context, feedback, child) {
+                return Text(
+                  feedback,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: _isCorrect ? Colors.green : Colors.red,
+                  ),
+                  textAlign: TextAlign.center,
+                );
+              },
             ),
             const SizedBox(height: 16),
             if (_isVideoInitialized)
-              SizedBox(
+              Container(
                 width: 200,
                 height: 150,
                 child: AspectRatio(

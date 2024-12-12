@@ -1,19 +1,23 @@
-import 'dart:math';
-
-import 'package:ebidence/constant/quiz_data.dart';
+// quiz_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final quizProvider = Provider<List<String>>((ref) {
-  final random = Random();
-  final keys = QuizData.ebiQuizData.keys.toList();
-
-  // ランダムに5問選択
-  final selectedQuestions = <String>{};
-  while (selectedQuestions.length < 5) {
-    selectedQuestions.add(keys[random.nextInt(keys.length)]);
-  }
-
-  return selectedQuestions.toList();
+final quizProvider = StateNotifierProvider<QuizNotifier, List<String>>((ref) {
+  return QuizNotifier();
 });
 
-final currentQuizIndexProvider = StateProvider<int>((ref) => 0);
+class QuizNotifier extends StateNotifier<List<String>> {
+  QuizNotifier() : super([]);
+
+  void generateRandomQuestions(List<String> allQuestions, int count) {
+    state = (allQuestions..shuffle()).take(count).toList();
+  }
+}
+
+final currentQuestionIndexProvider =
+    StateProvider<int>((ref) => 0); // 現在の問題のインデックスを管理
+
+final currentQuestionProvider = Provider<String>((ref) {
+  final index = ref.watch(currentQuestionIndexProvider);
+  final selectedQuestions = ref.watch(quizProvider);
+  return selectedQuestions.isNotEmpty ? selectedQuestions[index] : '';
+});

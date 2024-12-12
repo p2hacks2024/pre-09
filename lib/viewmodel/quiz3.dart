@@ -1,21 +1,20 @@
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ebidence/provider/quiz_provider.dart';
 import 'package:video_player/video_player.dart';
 
-class Quiz3 extends StatefulWidget {
+class Quiz3 extends ConsumerStatefulWidget {
   const Quiz3({super.key});
 
   @override
-  State<Quiz3> createState() => _QuizState();
+  ConsumerState<Quiz3> createState() => _QuizState();
 }
 
-class _QuizState extends State<Quiz3> {
+class _QuizState extends ConsumerState<Quiz3> {
   final _controller = TextEditingController();
-  final _random = Random();
-  String _currentQuestion = '';
-  String _feedback = '';
+  final _feedback = ValueNotifier<String>('');
   bool _isCorrect = false;
 
   late VideoPlayerController _videoPlayerController;
@@ -24,22 +23,19 @@ class _QuizState extends State<Quiz3> {
   @override
   void initState() {
     super.initState();
-    _generateNewQuestion();
 
     // 動画プレーヤーの初期化
     _videoPlayerController = VideoPlayerController.asset(
-      'assets/movies/ebi.mp4', // 動画ファイルのパス
+      'assets/movies/ebi.mp4',
     )..initialize().then((_) {
         setState(() {
           _isVideoInitialized = true;
         });
       });
 
-    // 動画の再生が終了したかどうかをチェックするリスナーを追加
     _videoPlayerController.addListener(() {
       if (_videoPlayerController.value.position ==
           _videoPlayerController.value.duration) {
-        // 動画の再生が終わったら次の問題に進む
         _goToNextQuestion();
       }
     });
@@ -51,43 +47,41 @@ class _QuizState extends State<Quiz3> {
     super.dispose();
   }
 
-  void _generateNewQuestion() {
-    final keys = QuizData.ebiQuizData.keys.toList();
-    setState(() {
-      _currentQuestion = keys[_random.nextInt(keys.length)];
-      _feedback = '';
-      _controller.clear();
-    });
+  void _checkAnswer(String currentQuestion) {
+    final correctAnswer = QuizData.ebiQuizData[currentQuestion];
+    if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
+      _feedback.value = '正解！';
+      _isCorrect = true;
+    } else {
+      _feedback.value = '不正解。正しい答えは: $correctAnswer';
+      _isCorrect = false;
+    }
+
+    if (_isVideoInitialized) {
+      _videoPlayerController
+        ..seekTo(Duration.zero)
+        ..play();
+    }
   }
 
-  void _checkAnswer() {
-    final correctAnswer = QuizData.ebiQuizData[_currentQuestion];
-    setState(() {
-      if (_controller.text.trim().toLowerCase() ==
-          correctAnswer?.toLowerCase()) {
-        _feedback = '正解！';
-        _isCorrect = true;
-      } else {
-        _feedback = '不正解。正しい答えは: $correctAnswer';
-        _isCorrect = false;
-      }
-
-      // 動画の再生
-      if (_isVideoInitialized) {
-        _videoPlayerController
-          ..seekTo(Duration.zero) // 動画を最初に戻す
-          ..play();
-      }
-    });
-  }
-
-  // 動画終了後に次の問題へ遷移
   void _goToNextQuestion() {
-    router.go('/quiz4'); // 次の問題へ遷移
+    final currentIndex = ref.read(currentQuestionIndexProvider);
+    final totalQuestions = ref.read(quizProvider).length;
+
+    // 次の問題へ進む
+    if (currentIndex + 1 < totalQuestions) {
+      ref.read(currentQuestionIndexProvider.notifier).state = currentIndex + 1;
+      router.go('/quiz4');
+    } else {
+      // もし最後の問題に到達した場合は次の画面へ
+      router.go('/quizComplete'); // 例えばクイズ終了画面に遷移
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentQuestion = ref.watch(currentQuestionProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('日本語 -> 英語クイズ'),
@@ -103,7 +97,7 @@ class _QuizState extends State<Quiz3> {
             ),
             const SizedBox(height: 16),
             Text(
-              _currentQuestion,
+              currentQuestion,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -117,24 +111,28 @@ class _QuizState extends State<Quiz3> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _checkAnswer,
+              onPressed: () => _checkAnswer(currentQuestion),
               child: const Text('答えをチェック'),
             ),
             const SizedBox(height: 16),
-            Text(
-              _feedback,
-              style: TextStyle(
-                fontSize: 18,
-                color: _isCorrect ? Colors.green : Colors.red,
-              ),
-              textAlign: TextAlign.center,
+            ValueListenableBuilder<String>(
+              valueListenable: _feedback,
+              builder: (context, feedback, child) {
+                return Text(
+                  feedback,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: _isCorrect ? Colors.green : Colors.red,
+                  ),
+                  textAlign: TextAlign.center,
+                );
+              },
             ),
             const SizedBox(height: 16),
             if (_isVideoInitialized)
-              // 動画の表示
-              SizedBox(
-                width: 200, // 幅を指定
-                height: 150, // 高さを指定
+              Container(
+                width: 200,
+                height: 150,
                 child: AspectRatio(
                   aspectRatio: _videoPlayerController.value.aspectRatio,
                   child: VideoPlayer(_videoPlayerController),
