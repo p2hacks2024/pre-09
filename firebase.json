@@ -8,7 +8,7 @@
     ],
     "rewrites": [
       {
-        "source": "/#/result/**",
+        "source": "/result/**",
         "function": "createOgp"
       },
       {
