@@ -2,6 +2,7 @@ import 'package:ebidence/firebase_options.dart';
 import 'package:ebidence/function/gif_recorder.dart';
 import 'package:ebidence/function/x_share.dart';
 import 'package:ebidence/view/developer/send_firebase.dart';
+import 'package:ebidence/viewmodel/quiz.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SendFirebase(),
+      home: Quiz(),
     );
   }
 }
