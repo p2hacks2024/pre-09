@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class SendFirebase extends StatefulWidget {
   const SendFirebase({super.key});
@@ -16,7 +17,7 @@ class SendFirebase extends StatefulWidget {
 
 class _SendFirebaseState extends State<SendFirebase> {
   final storageRef = FirebaseStorage.instance.ref();
-  late final Reference containerRef;
+  late Reference containerRef;
 
   final GlobalKey _repaintBoundaryKey = GlobalKey();
 
@@ -27,7 +28,14 @@ class _SendFirebaseState extends State<SendFirebase> {
   @override
   void initState() {
     super.initState();
-    containerRef = storageRef.child("container_image.jpg");
+    _updateContainerRef();
+  }
+
+  /// 現在のタイムスタンプを用いてReferenceを更新
+  void _updateContainerRef() {
+    final String timestamp =
+        DateFormat('yyyy_MM_dd_HH_mm_ss_SSS').format(DateTime.now());
+    containerRef = storageRef.child("$timestamp.jpg");
   }
 
   /// Containerを画像としてレンダリングし、Uint8List形式で取得
@@ -53,6 +61,9 @@ class _SendFirebaseState extends State<SendFirebase> {
 
   Future<void> uploadContainerImageAndSaveToFirestore() async {
     try {
+      // タイムスタンプを使用してファイル名を更新
+      _updateContainerRef();
+
       // Containerを画像としてキャプチャ
       Uint8List containerImage = await _captureContainerAsImage();
 
@@ -70,13 +81,13 @@ class _SendFirebaseState extends State<SendFirebase> {
       DocumentReference docRef = await FirebaseFirestore.instance
           .collection('images')
           .add({'url': downloadUrl});
-
+      
       setState(() {
         _docId = docRef.id; // ドキュメントIDを状態変数に保存
       });
 
-      // デバッグコンソールにドキュメントIDを表示
       debugPrint('Firestoreに保存したドキュメントID: ${docRef.id}');
+      debugPrint('保存した画像名: ${containerRef.name}');
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('保存成功！ドキュメントID: ${docRef.id}')),

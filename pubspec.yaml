@@ -20,6 +20,7 @@ dependencies:
 
 
   go_router: ^14.6.2
+  intl: ^0.20.1
   screen_recorder: ^0.3.0
   url_launcher: ^6.3.1
 
