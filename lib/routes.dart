@@ -1,7 +1,8 @@
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
+import 'package:ebidence/view/select_subject_page.dart';
+import 'package:ebidence/view/start_page.dart';
 import 'package:ebidence/viewmodel/beforequiz.dart';
-import 'package:ebidence/viewmodel/postimage.dart';
 import 'package:ebidence/viewmodel/quiz1.dart';
 import 'package:ebidence/viewmodel/quiz2.dart';
 import 'package:ebidence/viewmodel/quiz3.dart';
@@ -15,7 +16,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
     navigatorKey: navigatorKey,
-    initialLocation: '/postImage',
+    initialLocation: '/startpage',
     routes: [
       GoRoute(
         path: '/beforequiz',
@@ -61,12 +62,6 @@ final router = GoRouter(
         },
       ),
       GoRoute(
-        path: '/postImage',
-        builder: (context, state) {
-          return const PostImage();
-        },
-      ),
-      GoRoute(
           path: '/',
           builder: (context, state) {
             return const SendFirebase();
@@ -76,5 +71,15 @@ final router = GoRouter(
           builder: (context, state) {
             final imageId = state.pathParameters['_imageId']!;
             return ResultPage(imageId: imageId);
-          })
+          }),
+      GoRoute(
+          path: '/selectsubject',
+          builder: (context, state) {
+            return const SelectSubjectPage();
+          }),
+      GoRoute(
+          path: '/startpage',
+          builder: (context, state) {
+            return const StartPage();
+          }),
     ]);
