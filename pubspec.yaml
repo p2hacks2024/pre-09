@@ -18,6 +18,7 @@ dependencies:
 
   flutter_riverpod: ^2.6.1
   go_router: ^14.6.2
+  google_fonts: ^6.2.1
   intl: ^0.20.1
   screen_recorder: ^0.3.0
   url_launcher: ^6.3.1
@@ -34,4 +35,14 @@ flutter:
     - assets/images/
     - assets/movies/
 
+  fonts:
+    - family: NotoSansJP
+      fonts: 
+        - asset: assets/fonts/NotoSansJP-Bold.ttf
+    - family: Inter
+      fonts: 
+        - asset: assets/fonts/Inter_18pt-ExtraBold.ttf
+        - asset: assets/fonts/Inter_24pt-ExtraBold.ttf
+        - asset: assets/fonts/Inter_28pt-ExtraBold.ttf
+ 
   uses-material-design: true
