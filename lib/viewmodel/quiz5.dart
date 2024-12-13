@@ -81,7 +81,10 @@ class _QuizState extends ConsumerState<Quiz5> {
       final isCheckAllFalse =
           quizResults.isNotEmpty && quizResults.every((result) => !result);
 
-      router.go('/result', extra: isCheckAllFalse); // 例えばクイズ終了画面に遷移
+      //router.go('/result', extra: isCheckAllFalse); // 例えばクイズ終了画面に遷移
+      router.go('/resultcard',
+          extra:
+              isCheckAllFalse); //TODO if文で全部間違えてたらこっち(ref.watch(quizResultProvider))
     }
   }
 

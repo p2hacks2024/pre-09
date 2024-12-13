@@ -16,7 +16,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
     navigatorKey: navigatorKey,
-    initialLocation: '/resultcard',
+    initialLocation: '/beforequiz',
     routes: [
       GoRoute(
         path: '/beforequiz',

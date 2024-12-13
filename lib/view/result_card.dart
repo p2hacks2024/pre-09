@@ -64,9 +64,10 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
 
   @override
   Widget build(BuildContext context) {
-    final resultCards = ref.read(quizProvider);
+    final resultCard = ref.read(quizProvider);
     final quizResults = ref.watch(quizResultProvider);
-    debugPrint(resultCards.toString());
+
+    debugPrint(resultCard[0]);
 
     return Scaffold(
       body: GestureDetector(
