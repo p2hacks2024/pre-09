@@ -55,7 +55,8 @@ final router = GoRouter(
       GoRoute(
         path: '/result',
         builder: (context, state) {
-          return const ResultPage1();
+          final isCheakAllFalse = state.extra as bool? ?? false; // 安全な型キャスト
+          return ResultPage1(isCheakAllFalse);
         },
       ),
       GoRoute(
