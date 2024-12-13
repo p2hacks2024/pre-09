@@ -1,5 +1,6 @@
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
+import 'package:ebidence/view/result_card.dart';
 import 'package:ebidence/viewmodel/beforequiz.dart';
 import 'package:ebidence/viewmodel/quiz1.dart';
 import 'package:ebidence/viewmodel/quiz2.dart';
@@ -14,7 +15,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
     navigatorKey: navigatorKey,
-    initialLocation: '/beforequiz',
+    initialLocation: '/resultcard',
     routes: [
       GoRoute(
         path: '/beforequiz',
@@ -68,5 +69,10 @@ final router = GoRouter(
           builder: (context, state) {
             final imageId = state.pathParameters['_imageId']!;
             return ResultPage(imageId: imageId);
-          })
+          }),
+      GoRoute(
+          path: '/resultcard',
+          builder: (context, state) {
+            return ResultCardScreen();
+          }),
     ]);
