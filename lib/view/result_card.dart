@@ -1,3 +1,4 @@
+import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/provider/quiz_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,23 +12,24 @@ class ResultCardScreen extends ConsumerStatefulWidget {
 
 class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
     with SingleTickerProviderStateMixin {
-  final List<ResultCard> resultCards = [
-    ResultCard(
-        question: "コーヒーショップの場所",
-        answer: "Where is the coffee shop after exiting the station?"),
-    ResultCard(
-        question: "レストランの予約",
-        answer: "I'd like to make a reservation for dinner."),
-    ResultCard(
-        question: "電車の乗り方",
-        answer: "How do I take the train to the city center?"),
-    ResultCard(
-        question: "観光スポットの推薦",
-        answer: "Can you recommend some popular tourist attractions?"),
-    ResultCard(
-        question: "ホテルのチェックイン時間",
-        answer: "What time is check-in at the hotel?"),
-  ];
+  final List<ResultCard> resultCards = [];
+  // final List<ResultCard> resultCards = [
+  //   ResultCard(
+  //       question: "あ",
+  //       answer: "a"),
+  //   ResultCard(
+  //       question: "い",
+  //       answer: "i"),
+  //   ResultCard(
+  //       question: "う",
+  //       answer: "u"),
+  //   ResultCard(
+  //       question: "え",
+  //       answer: "e"),
+  //   ResultCard(
+  //       question: "お",
+  //       answer: "o"),
+  // ];
 
   late int currentIndex;
   late AnimationController _controller;
@@ -64,10 +66,19 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
 
   @override
   Widget build(BuildContext context) {
-    final resultCard = ref.read(quizProvider);
+    final quiz = ref.read(quizProvider);
     final quizResults = ref.watch(quizResultProvider);
 
-    debugPrint(resultCard[0]);
+    if (resultCards.isEmpty && quiz.isNotEmpty) {
+      for (var i = 0; i < quiz.length; i++) {
+        if (quizResults[i] == false) {
+          resultCards.add(ResultCard(
+            question: quiz[i],
+            answer: QuizData.ebiQuizData[quiz[i]].toString(),
+          ));
+        }
+      }
+    }
 
     return Scaffold(
       body: GestureDetector(
@@ -107,13 +118,7 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
       height: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 5,
-            offset: Offset(0, 5),
-          ),
-        ],
+        border: Border.all(color: Colors.black),
       ),
       child: Padding(
         padding: EdgeInsets.all(16),
@@ -123,7 +128,7 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
             Text(
               resultCards[currentIndex].question,
               style: const TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
@@ -131,7 +136,7 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
             const SizedBox(height: 16),
             Text(
               resultCards[currentIndex].answer,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(color: Colors.black, fontSize: 16),
               textAlign: TextAlign.center,
             ),
           ],
