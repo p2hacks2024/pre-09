@@ -1,13 +1,15 @@
+import 'package:ebidence/provider/quiz_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ResultCardScreen extends StatefulWidget {
+class ResultCardScreen extends ConsumerStatefulWidget {
   const ResultCardScreen({super.key});
 
   @override
-  State<ResultCardScreen> createState() => _ResultCardScreenState();
+  ConsumerState<ResultCardScreen> createState() => _ResultCardScreenState();
 }
 
-class _ResultCardScreenState extends State<ResultCardScreen>
+class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
     with SingleTickerProviderStateMixin {
   final List<ResultCard> resultCards = [
     ResultCard(
@@ -62,6 +64,10 @@ class _ResultCardScreenState extends State<ResultCardScreen>
 
   @override
   Widget build(BuildContext context) {
+    final resultCards = ref.read(quizProvider);
+    final quizResults = ref.watch(quizResultProvider);
+    debugPrint(resultCards.toString());
+
     return Scaffold(
       body: GestureDetector(
         onVerticalDragUpdate: (details) {
