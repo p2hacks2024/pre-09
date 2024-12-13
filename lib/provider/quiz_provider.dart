@@ -23,3 +23,6 @@ final currentQuestionProvider = Provider<String>((ref) {
 });
 
 final quizResultProvider = StateProvider<List<bool>>((ref) => []);
+
+// モードを保持するプロバイダー
+final modeProvider = StateProvider<String>((ref) => '');

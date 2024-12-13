@@ -70,6 +70,27 @@ class _QuizState extends ConsumerState<Quiz1> {
     }
   }
 
+  void _l1CheckAnswer(String currentQuestion) {
+    final correctAnswer = QuizData.l1QuizData[currentQuestion];
+    if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
+      _feedback.value = '正解！';
+      _isCorrect = true;
+      ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
+    } else {
+      _feedback.value = '不正解。正しい答えは: $correctAnswer';
+      _isCorrect = false;
+      ref
+          .read(quizResultProvider.notifier)
+          .update((state) => [...state, false]);
+    }
+
+    if (_isVideoInitialized) {
+      _videoPlayerController
+        ..seekTo(Duration.zero)
+        ..play();
+    }
+  }
+
   void _goToNextQuestion() {
     final currentIndex = ref.read(currentQuestionIndexProvider);
     final totalQuestions = ref.read(quizProvider).length;
@@ -119,7 +140,14 @@ class _QuizState extends ConsumerState<Quiz1> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => _checkAnswer(currentQuestion),
+              onPressed: () {
+                final mode = ref.read(modeProvider); // 現在のモードを取得
+                if (mode == 'ebimode') {
+                  _checkAnswer(currentQuestion);
+                } else if (mode == 'level1mode') {
+                  _l1CheckAnswer(currentQuestion);
+                }
+              },
               child: const Text('答えをチェック'),
             ),
             const SizedBox(height: 16),
