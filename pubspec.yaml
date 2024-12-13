@@ -29,6 +29,7 @@ dependencies:
   url_launcher: ^6.3.1
   video_player: ^2.9.2
   flash_card: ^0.1.0
+  gif: ^2.3.0
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,9 @@
-// quiz1.dart
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ebidence/provider/quiz_provider.dart';
+import 'package:gif/gif.dart';
 import 'package:video_player/video_player.dart';
 
 class Quiz1 extends ConsumerStatefulWidget {
@@ -13,38 +13,28 @@ class Quiz1 extends ConsumerStatefulWidget {
   ConsumerState<Quiz1> createState() => _QuizState();
 }
 
-class _QuizState extends ConsumerState<Quiz1> {
+class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
   final _controller = TextEditingController();
   final _feedback = ValueNotifier<String>('');
   bool _isCorrect = false;
 
-  late VideoPlayerController _videoPlayerController;
-  bool _isVideoInitialized = false;
+  // late VideoPlayerController _videoPlayerController;
+  // bool _isVideoInitialized = false;
+
+  late GifController _gifController;
+  bool _isGifInitialized = false;
 
   @override
   void initState() {
     super.initState();
-
-    // 動画プレーヤーの初期化
-    _videoPlayerController = VideoPlayerController.asset(
-      'assets/movies/ebi.mp4',
-    )..initialize().then((_) {
-        setState(() {
-          _isVideoInitialized = true;
-        });
-      });
-
-    _videoPlayerController.addListener(() {
-      if (_videoPlayerController.value.position ==
-          _videoPlayerController.value.duration) {
-        _goToNextQuestion();
-      }
-    });
+    // GifControllerを初期化
+    _gifController = GifController(vsync: this);
+    _isGifInitialized = true;
   }
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    _gifController.dispose();
     super.dispose();
   }
 
@@ -62,10 +52,12 @@ class _QuizState extends ConsumerState<Quiz1> {
           .update((state) => [...state, false]);
     }
 
-    if (_isVideoInitialized) {
-      _videoPlayerController
-        ..seekTo(Duration.zero)
-        ..play();
+    if (_isGifInitialized) {
+      print("Playing GIF");
+      _gifController
+        ..reset()
+        ..forward(); // GIFの再生
+      print("Played GIF");
     }
   }
 
@@ -134,14 +126,13 @@ class _QuizState extends ConsumerState<Quiz1> {
               },
             ),
             const SizedBox(height: 16),
-            if (_isVideoInitialized)
-              Container(
-                width: 200,
-                height: 150,
-                child: AspectRatio(
-                  aspectRatio: _videoPlayerController.value.aspectRatio,
-                  child: VideoPlayer(_videoPlayerController),
-                ),
+            if (_isGifInitialized)
+              Gif(
+                controller: _gifController,
+                image: const AssetImage('assets/images/evi_allmiss.gif'),
+                width: 150,
+                height: 100,
+                fit: BoxFit.contain,
               ),
             const Spacer(),
           ],
