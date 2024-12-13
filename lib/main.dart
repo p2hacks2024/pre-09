@@ -1,72 +1,48 @@
-import 'package:ebidence/storage/gamestate/debug_game_screen.dart';
-import 'package:ebidence/storage/gamestate/game_data_handler.dart';
-import 'package:ebidence/storage/wrongdata/wrong_storage.dart';
-import 'package:flutter/material.dart';
+import 'package:ebidence/view/select_subject_page.dart';
+import 'package:ebidence/view/start_page.dart';
+import 'package:ebidence/firebase_options.dart';
+import 'package:ebidence/function/gif_recorder.dart';
+import 'package:ebidence/function/x_share.dart';
+import 'package:ebidence/view/developer/send_firebase.dart';
+import 'package:ebidence/viewmodel/quiz1.dart';
+import 'package:ebidence/routes.dart';
+import 'package:ebidence/viewmodel/quiz2.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:firebase_core/firebase_core.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    const ProviderScope(
+      // アプリ全体をProviderScopeでラップ
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Counter Example',
+
+    return MaterialApp.router(
+      title: 'evidence',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        fontFamily: 'Inter',
+        fontFamilyFallback: ['NotoSansJP'],
         useMaterial3: true,
       ),
-      home: DebugGameScreen(),
-      //home: MyHomePage(title: 'screen_transition'),
-    );
-  }
-}
+      routerConfig: router,
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

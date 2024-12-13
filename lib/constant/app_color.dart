@@ -11,8 +11,9 @@ class AppColor {
 
 class _Brand {
   final Color primary = const Color(0xFFFFFFFF);
-  final Color secondary = const Color(0xFFFFAB40);
+  final Color secondary = const Color(0xFFFFF9D68);
   final Color secondaryLight = const Color(0xFFFFC966);
+  final Color logo = const Color(0xFFFF9857);
   final Color tertiary = const Color(0xFF9ACCE2);
 }
 
@@ -27,7 +28,8 @@ class _Text {
 }
 
 class _Ui {
-  final Color secondaryUltraLight = const Color(0xFFFFEDCC);
+  final Color logo = const Color(0xFFFF9857);
+
   final Color white = const Color(0xFFFFFFFF);
   final Color black = const Color(0xFF000000);
   final Color shadow = const Color(0xFF000000).withOpacity(0.4);
