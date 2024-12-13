@@ -13,7 +13,7 @@ class PostImage extends ConsumerWidget {
           children: [
             SizedBox(height: 10),
             Container(
-              width: 900,
+              width: 1200,
               height: 630,
               color: Colors.white,
               child: Column(
@@ -80,7 +80,7 @@ class PostImage extends ConsumerWidget {
                   Text(
                     '全問不正解',
                     style: TextStyle(
-                      fontSize: 140,
+                      fontSize: 120,
                       fontFamily: 'NotoSansJP-Bold',
                       color: AppColor.text.black,
                     ),
@@ -129,12 +129,24 @@ class PostImage extends ConsumerWidget {
                           )
                         ],
                       ),
-                      Image.asset(
-                        'images/evi_cam.png',
-                        height: 265,
+                      SizedBox(
+                        width: 150,
+                      ),
+                      Column(
+                        children: [
+                          Image.asset(
+                            'images/evi_cam.png',
+                            height: 238,
+                          ),
+                        ],
                       ),
                     ],
                   ),
+                  Text(
+                    '@ガリバタコーン',
+                    style: TextStyle(
+                        fontSize: 12, color: AppColor.brand.secondary),
+                  )
                 ],
               ),
             ),
