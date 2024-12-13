@@ -30,6 +30,6 @@ class QuizData {
     'ヒレ': 'fin',
     'エラ': 'gills',
     'ウロコ': 'scales',
-    'エビやロブスターなどのはさみ': 'pincers'
+    'エビなどのはさみ': 'pincers'
   };
 }

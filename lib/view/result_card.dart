@@ -43,7 +43,7 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
     currentIndex = 0;
     _controller = AnimationController(
         duration: const Duration(milliseconds: 300), vsync: this);
-    _animation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -1.5))
+    _animation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -2))
         .animate(_controller);
   }
 
@@ -66,6 +66,8 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
 
   @override
   Widget build(BuildContext context) {
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
     final quiz = ref.read(quizProvider);
     final quizResults = ref.watch(quizResultProvider);
 
@@ -81,41 +83,36 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
     }
 
     return Scaffold(
-      body: GestureDetector(
-        onVerticalDragUpdate: (details) {
-          _controller.value -= details.primaryDelta! / context.size!.height;
-        },
-        onVerticalDragEnd: (details) {
-          if (_controller.value > -0.5) {
-            _controller.forward().then((_) {
-              _controller.reset();
-              _nextCard();
-            });
-          }
-        },
-        child: Center(
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              if (isExistCards) {
-                return SlideTransition(
-                  position: _animation,
-                  child: _buildCard(),
-                );
-              } else {
-                return Text('カードなくなったよ');
-              }
-            },
-          ),
-        ),
+      body: Center(
+        child: isExistCards
+            ? AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return GestureDetector(
+                    onTap: () {
+                      _controller.forward().then((_) {
+                        _controller.reset();
+                        _nextCard();
+                      });
+                    },
+                    child: SlideTransition(
+                      position: _animation,
+                      child: _buildCard(),
+                    ),
+                  );
+                },
+              )
+            : const Text('カードなくなったよ'),
       ),
     );
   }
 
   Widget _buildCard() {
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: 300,
-      height: 200,
+      width: deviceWidth / 1.5,
+      height: deviceHeight / 1.5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.black),
@@ -127,16 +124,16 @@ class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
           children: [
             Text(
               resultCards[currentIndex].question,
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: deviceWidth / 10,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             Text(
               resultCards[currentIndex].answer,
-              style: const TextStyle(color: Colors.black, fontSize: 16),
+              style: TextStyle(color: Colors.red, fontSize: deviceWidth / 20),
               textAlign: TextAlign.center,
             ),
           ],
