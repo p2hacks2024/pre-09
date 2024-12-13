@@ -1,5 +1,7 @@
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
+import 'package:ebidence/view/select_subject_page.dart';
+import 'package:ebidence/view/start_page.dart';
 import 'package:ebidence/viewmodel/beforequiz.dart';
 import 'package:ebidence/viewmodel/quiz1.dart';
 import 'package:ebidence/viewmodel/quiz2.dart';
@@ -14,27 +16,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
     navigatorKey: navigatorKey,
-    initialLocation: '/beforequiz',
+    initialLocation: '/startpage',
     routes: [
-      GoRoute(
-          path: '/',
-          builder: (context, state) {
-            return const SendFirebase();
-          }),
-      GoRoute(
-        path: '/result/:_imageId',
-        builder: (context, state) {
-          final imageId = state.pathParameters['_imageId']!;
-          if (imageId == null) {
-            return Scaffold(
-              body: Center(
-                  child:
-                      Text('imageIdがnullなんだけどーー')), // imageIdがnullの場合のエラーメッセージ
-            );
-          }
-          return ResultPage(imageId: imageId);
-        },
-      ),
       GoRoute(
         path: '/beforequiz',
         builder: (context, state) {
@@ -87,5 +70,15 @@ final router = GoRouter(
           builder: (context, state) {
             final imageId = state.pathParameters['_imageId']!;
             return ResultPage(imageId: imageId);
+          }),
+      GoRoute(
+          path: '/selectsubject',
+          builder: (context, state) {
+            return const SelectSubjectPage();
+          }),
+      GoRoute(
+          path: '/startpage',
+          builder: (context, state) {
+            return const StartPage();
           }),
     ]);
