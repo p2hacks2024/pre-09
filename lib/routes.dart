@@ -1,6 +1,7 @@
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
 import 'package:ebidence/viewmodel/beforequiz.dart';
+import 'package:ebidence/viewmodel/postimage.dart';
 import 'package:ebidence/viewmodel/quiz1.dart';
 import 'package:ebidence/viewmodel/quiz2.dart';
 import 'package:ebidence/viewmodel/quiz3.dart';
@@ -14,7 +15,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
     navigatorKey: navigatorKey,
-    initialLocation: '/beforequiz',
+    initialLocation: '/postImage',
     routes: [
       GoRoute(
         path: '/beforequiz',
@@ -57,6 +58,12 @@ final router = GoRouter(
         builder: (context, state) {
           final isCheakAllFalse = state.extra as bool? ?? false; // 安全な型キャスト
           return ResultPage1(isCheakAllFalse);
+        },
+      ),
+      GoRoute(
+        path: '/postImage',
+        builder: (context, state) {
+          return const PostImage();
         },
       ),
       GoRoute(
