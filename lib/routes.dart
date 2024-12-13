@@ -76,9 +76,9 @@ final router = GoRouter(
       GoRoute(
           path: '/resultcard',
           builder: (context, state) {
-            return ResultCardScreen();
-            }),
-GoRoute(
+            return ResultFlashCard();
+          }),
+      GoRoute(
           path: '/selectsubject',
           builder: (context, state) {
             return const SelectSubjectPage();

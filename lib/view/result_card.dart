@@ -3,14 +3,14 @@ import 'package:ebidence/provider/quiz_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ResultCardScreen extends ConsumerStatefulWidget {
-  const ResultCardScreen({super.key});
+class ResultFlashCard extends ConsumerStatefulWidget {
+  const ResultFlashCard({super.key});
 
   @override
-  ConsumerState<ResultCardScreen> createState() => _ResultCardScreenState();
+  ConsumerState<ResultFlashCard> createState() => _ResultFlashCardState();
 }
 
-class _ResultCardScreenState extends ConsumerState<ResultCardScreen>
+class _ResultFlashCardState extends ConsumerState<ResultFlashCard>
     with SingleTickerProviderStateMixin {
   final List<ResultCard> resultCards = [];
   // final List<ResultCard> resultCards = [
