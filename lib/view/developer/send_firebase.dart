@@ -82,7 +82,7 @@ class _SendFirebaseState extends State<SendFirebase> {
       DocumentReference docRef = await FirebaseFirestore.instance
           .collection('images')
           .add({'url': downloadUrl});
-      
+
       setState(() {
         _docId = docRef.id; // ドキュメントIDを状態変数に保存
       });

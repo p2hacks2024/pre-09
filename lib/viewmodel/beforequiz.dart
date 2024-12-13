@@ -18,6 +18,10 @@ class Beforequiz extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'AIUEO',
+              style: TextStyle(fontSize: 24, fontFamily: 'Inter'),
+            ),
             const Text(
               'クイズへ続く',
               style: TextStyle(fontSize: 24),
