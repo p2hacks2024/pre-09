@@ -1,3 +1,4 @@
+import 'package:ebidence/view/select_subject_page.dart';
 import 'package:ebidence/view/start_page.dart';
 import 'package:ebidence/firebase_options.dart';
 import 'package:ebidence/function/gif_recorder.dart';
@@ -8,6 +9,7 @@ import 'package:ebidence/routes.dart';
 import 'package:ebidence/viewmodel/quiz2.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routerConfig: router,
+
     );
   }
 }

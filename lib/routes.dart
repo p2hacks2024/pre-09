@@ -1,5 +1,6 @@
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
+import 'package:ebidence/view/select_subject_page.dart';
 import 'package:ebidence/view/start_page.dart';
 import 'package:ebidence/viewmodel/beforequiz.dart';
 import 'package:ebidence/viewmodel/quiz1.dart';
@@ -70,6 +71,11 @@ final router = GoRouter(
             final imageId = state.pathParameters['_imageId']!;
             return ResultPage(imageId: imageId);
           }),
+      GoRoute(
+          path: '/selectsubject',
+          builder: (context, state) {
+            return const SelectSubjectPage();
+            }),
       GoRoute(
           path: '/startpage',
           builder: (context, state) {
