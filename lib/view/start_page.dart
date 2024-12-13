@@ -19,7 +19,6 @@ class _StartPageState extends State<StartPage> {
       backgroundColor: AppColor.brand.secondary,
       body: Padding(
         padding: EdgeInsets.only(
-          top: deviceHeight / 13,
           right: deviceWidth / 6,
           left: deviceWidth / 6,
         ),
@@ -55,15 +54,15 @@ class _StartPageState extends State<StartPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.asset(
-                        'assets/images/shrimp.png',
+                        'assets/images/shrimp_cam.png',
                         width: deviceWidth / 7,
                       ),
                       Image.asset(
-                        'assets/images/shrimp.png',
+                        'assets/images/shrimp_cam.png',
                         width: deviceWidth / 7,
                       ),
                       Image.asset(
-                        'assets/images/shrimp.png',
+                        'assets/images/shrimp_cam.png',
                         width: deviceWidth / 7,
                       ),
                     ],
@@ -108,11 +107,11 @@ class _StartPageState extends State<StartPage> {
                         },
                         child: const Text("START"),
                       ),
-                      IconButton(
-                        style: IconButton.styleFrom(
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
                             foregroundColor: AppColor.brand.logo,
                             backgroundColor: AppColor.brand.primary,
-                            iconSize: deviceWidth / 18,
+                            fixedSize: Size(deviceWidth / 14, deviceWidth / 14),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             )),
@@ -124,7 +123,10 @@ class _StartPageState extends State<StartPage> {
                             },
                           );
                         },
-                        icon: const Icon(Icons.exit_to_app_rounded),
+                        child: Icon(
+                          Icons.exit_to_app_rounded,
+                          size: deviceWidth / 20,
+                        ),
                       ),
                     ],
                   ),
