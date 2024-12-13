@@ -52,9 +52,13 @@ class _QuizState extends ConsumerState<Quiz4> {
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       _isCorrect = true;
+      ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       _isCorrect = false;
+      ref
+          .read(quizResultProvider.notifier)
+          .update((state) => [...state, false]);
     }
 
     if (_isVideoInitialized) {

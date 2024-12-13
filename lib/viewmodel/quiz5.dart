@@ -52,9 +52,13 @@ class _QuizState extends ConsumerState<Quiz5> {
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       _isCorrect = true;
+      ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       _isCorrect = false;
+      ref
+          .read(quizResultProvider.notifier)
+          .update((state) => [...state, false]);
     }
 
     if (_isVideoInitialized) {
@@ -67,14 +71,17 @@ class _QuizState extends ConsumerState<Quiz5> {
   void _goToNextQuestion() {
     final currentIndex = ref.read(currentQuestionIndexProvider);
     final totalQuestions = ref.read(quizProvider).length;
+    final quizResults = ref.watch(quizResultProvider);
 
     // 次の問題へ進む
     if (currentIndex + 1 < totalQuestions) {
       ref.read(currentQuestionIndexProvider.notifier).state = currentIndex + 1;
-      router.go('/quiz5');
     } else {
       // もし最後の問題に到達した場合は次の画面へ
-      router.go('/result'); // 例えばクイズ終了画面に遷移
+      final isCheckAllFalse =
+          quizResults.isNotEmpty && quizResults.every((result) => !result);
+
+      router.go('/result', extra: isCheckAllFalse); // 例えばクイズ終了画面に遷移
     }
   }
 
