@@ -1,6 +1,7 @@
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
 import 'package:ebidence/view/select_subject_page.dart';
+import 'package:ebidence/view/start_page.dart';
 import 'package:ebidence/viewmodel/beforequiz.dart';
 import 'package:ebidence/viewmodel/quiz1.dart';
 import 'package:ebidence/viewmodel/quiz2.dart';
@@ -15,7 +16,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
     navigatorKey: navigatorKey,
-    initialLocation: '/selectsubject',
+    initialLocation: '/startpage',
     routes: [
       GoRoute(
         path: '/beforequiz',
@@ -74,5 +75,10 @@ final router = GoRouter(
           path: '/selectsubject',
           builder: (context, state) {
             return const SelectSubjectPage();
+            }),
+      GoRoute(
+          path: '/startpage',
+          builder: (context, state) {
+            return const StartPage();
           }),
     ]);

@@ -47,6 +47,8 @@ class MarginSize {
 
   /// 小さなグリッド用マージン
   static const double minimumGrid = 2;
+
+  MarginSize(int i);
 }
 
 class PaddingSize {
