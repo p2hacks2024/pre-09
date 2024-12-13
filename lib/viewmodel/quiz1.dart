@@ -1,6 +1,7 @@
 // quiz1.dart
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
+import 'package:ebidence/viewmodel/ebidence_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ebidence/provider/quiz_provider.dart';
@@ -86,11 +87,13 @@ class _QuizState extends ConsumerState<Quiz1> {
   @override
   Widget build(BuildContext context) {
     final currentQuestion = ref.watch(currentQuestionProvider);
+    final double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('日本語 -> 英語クイズ'),
-      ),
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(deviceHeight / 5),
+          child: const EbidenceAppbar()),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
