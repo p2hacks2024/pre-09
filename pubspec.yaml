@@ -15,6 +15,7 @@ dependencies:
   firebase_storage: ^12.3.7
   flutter:
     sdk: flutter
+  drop_shadow_image: ^0.9.1
 
   flutter_riverpod: ^2.6.1
   go_router: ^14.6.2
