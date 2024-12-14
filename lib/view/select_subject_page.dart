@@ -16,6 +16,111 @@ class SelectSubjectPage extends ConsumerStatefulWidget {
 }
 
 class _SelectSubjectPageState extends ConsumerState<SelectSubjectPage> {
+  int tapCount = 0; // タップ回数をカウントする変数
+  bool isHukidashiVisible = false; // hukidashi_big.png が表示中かを管理するフラグ
+
+  void _incrementTapCount(BuildContext context) {
+    if (!isHukidashiVisible) return; // フラグが false の場合は処理を中断
+    final double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final buttonStyle2 = IconButton.styleFrom(
+      foregroundColor: AppColor.brand.primary,
+      backgroundColor: AppColor.brand.secondary,
+      iconSize: deviceWidth / 20,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    );
+    tapCount++;
+    if (tapCount == 5) {
+      // 5回タップされたらテキストを表示
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Stack(
+            children: [
+              Align(
+                alignment: const Alignment(0.9, 1),
+                child: GestureDetector(
+                  onTap: () => _incrementTapCount(context), // タップでカウントを増やす
+                  child: Image.asset(
+                    'images/evi_cam.png',
+                    width: 325,
+                    height: 325,
+                  ),
+                ),
+              ),
+              Center(
+                child: Image.asset(
+                  'images/ebimode_hukidashi.png',
+                  width: 900,
+                  height: 700,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Align(
+                alignment: const Alignment(0.3, 100),
+                child: Column(
+                  children: [],
+                ),
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 200),
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        side: const BorderSide(
+                          color: Colors.black,
+                          width: 3,
+                        ),
+                        minimumSize: Size(deviceWidth / 2.5, deviceHeight / 8),
+                        backgroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+                        // モードを保存
+                        ref.read(modeProvider.notifier).state = 'ebimode';
+
+                        // 全ての問題リストを取得
+                        final allEbiQuestions =
+                            QuizData.ebiQuizData.keys.toList();
+
+                        // 5つのランダムな問題を生成してリバーポッドに保存
+                        ref
+                            .read(quizProvider.notifier)
+                            .generateRandomQuestions(allEbiQuestions, 5);
+
+                        // ランダムに選ばれた問題をデバッグプリント
+                        final selectedQuestions = ref.read(quizProvider);
+                        print("ランダムに選ばれた問題: $selectedQuestions");
+                        router.go('/quiz1');
+                      },
+                      child: const Text(
+                        'LEVEL EBI',
+                        style: TextStyle(fontSize: 45),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: const Alignment(0.45, -0.83),
+                child: IconButton(
+                  style: buttonStyle2,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.clear),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final double deviceHeight = MediaQuery.of(context).size.height;
@@ -39,10 +144,13 @@ class _SelectSubjectPageState extends ConsumerState<SelectSubjectPage> {
         children: [
           Align(
             alignment: const Alignment(0.9, 1),
-            child: Image.asset(
-              'images/evi_cam.png',
-              width: 325,
-              height: 325,
+            child: GestureDetector(
+              onTap: () => _incrementTapCount(context), // タップでカウントを増やす
+              child: Image.asset(
+                'images/evi_cam.png',
+                width: 325,
+                height: 325,
+              ),
             ),
           ),
           Center(
@@ -62,14 +170,19 @@ class _SelectSubjectPageState extends ConsumerState<SelectSubjectPage> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
+                        isHukidashiVisible = true; // フラグが false の場合は処理を中断
                         return Stack(
                           children: [
                             Align(
                               alignment: const Alignment(0.9, 1),
-                              child: Image.asset(
-                                'images/evi_cam.png',
-                                width: 325,
-                                height: 325,
+                              child: GestureDetector(
+                                onTap: () =>
+                                    _incrementTapCount(context), // タップでカウントを増やす
+                                child: Image.asset(
+                                  'images/evi_cam.png',
+                                  width: 325,
+                                  height: 325,
+                                ),
                               ),
                             ),
                             Center(
@@ -107,14 +220,14 @@ class _SelectSubjectPageState extends ConsumerState<SelectSubjectPage> {
                                           'level1mode';
 
                                       // 全ての問題リストを取得
-                                      final allEbiQuestions =
+                                      final allL1Questions =
                                           QuizData.l1QuizData.keys.toList();
 
                                       // 5つのランダムな問題を生成してリバーポッドに保存
                                       ref
                                           .read(quizProvider.notifier)
                                           .generateRandomQuestions(
-                                              allEbiQuestions, 5);
+                                              allL1Questions, 5);
 
                                       // ランダムに選ばれた問題をデバッグプリント
                                       final selectedQuestions =
@@ -191,6 +304,7 @@ class _SelectSubjectPageState extends ConsumerState<SelectSubjectPage> {
                       width: 3,
                     ),
                     minimumSize: Size(deviceWidth / 2, deviceHeight / 6),
+                    backgroundColor: Colors.grey[600],
                   ),
                   onPressed: () {
                     showDialog(
@@ -210,6 +324,7 @@ class _SelectSubjectPageState extends ConsumerState<SelectSubjectPage> {
                       width: 3,
                     ),
                     minimumSize: Size(deviceWidth / 2, deviceHeight / 6),
+                    backgroundColor: Colors.grey[600],
                   ),
                   onPressed: () {
                     showDialog(
