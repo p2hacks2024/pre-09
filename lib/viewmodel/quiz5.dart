@@ -133,8 +133,8 @@ class _QuizState extends ConsumerState<Quiz5> with TickerProviderStateMixin {
       final isCheckAllFalse =
           quizResults.isNotEmpty && quizResults.every((result) => !result);
 
-      //router.go('/result', extra: isCheckAllFalse); // 例えばクイズ終了画面に遷移
-      router.go('/result_flash_card');
+      router.go('/result', extra: isCheckAllFalse); // 例えばクイズ終了画面に遷移
+      // router.go('/result_flash_card');
     }
   }
 
