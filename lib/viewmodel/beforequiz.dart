@@ -28,23 +28,40 @@ class Beforequiz extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                // モードを保存
+                ref.read(modeProvider.notifier).state = 'ebimode';
+
                 // 全ての問題リストを取得
-                final allQuestions = QuizData.ebiQuizData.keys.toList();
+                final allEbiQuestions = QuizData.ebiQuizData.keys.toList();
 
                 // 5つのランダムな問題を生成してリバーポッドに保存
                 ref
                     .read(quizProvider.notifier)
-                    .generateRandomQuestions(allQuestions, 5);
-
-                // 状態から選ばれた問題を取得してデバッグコンソールに出力
-                final selectedQuestions = ref.read(quizProvider);
-                debugPrint('選ばれた問題: $selectedQuestions');
+                    .generateRandomQuestions(allEbiQuestions, 5);
 
                 // 次の画面に遷移
                 router.go('/quiz1');
               },
-              child: const Text('次へ'),
-            )
+              child: const Text('ebimode'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // モードを保存
+                ref.read(modeProvider.notifier).state = 'level1mode';
+
+                // 全ての問題リストを取得
+                final allL1Questions = QuizData.l1QuizData.keys.toList();
+
+                // 5つのランダムな問題を生成してリバーポッドに保存
+                ref
+                    .read(quizProvider.notifier)
+                    .generateRandomQuestions(allL1Questions, 5);
+
+                // 次の画面に遷移
+                router.go('/quiz1');
+              },
+              child: const Text('LEVEL1mode'),
+            ),
           ],
         ),
       ),

@@ -45,13 +45,12 @@ flutter:
 
   fonts:
     - family: NotoSansJP
-      fonts: 
+      fonts:
         - asset: assets/fonts/NotoSansJP-Bold.ttf
     - family: Inter
-      fonts: 
+      fonts:
         - asset: assets/fonts/Inter_18pt-ExtraBold.ttf
         - asset: assets/fonts/Inter_24pt-ExtraBold.ttf
         - asset: assets/fonts/Inter_28pt-ExtraBold.ttf
- 
-  uses-material-design: true
 
+  uses-material-design: true
