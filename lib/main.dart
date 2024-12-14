@@ -1,13 +1,9 @@
-import 'package:ebidence/view/start_page.dart';
+import 'package:ebidence/constant/app_color.dart';
 import 'package:ebidence/firebase_options.dart';
-import 'package:ebidence/function/gif_recorder.dart';
-import 'package:ebidence/function/x_share.dart';
-import 'package:ebidence/view/developer/send_firebase.dart';
-import 'package:ebidence/viewmodel/quiz1.dart';
 import 'package:ebidence/routes.dart';
-import 'package:ebidence/viewmodel/quiz2.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,11 +26,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'evidence',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.brand.primary),
         fontFamily: 'Inter',
         fontFamilyFallback: ['NotoSansJP'],
         useMaterial3: true,

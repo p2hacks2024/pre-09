@@ -1,5 +1,8 @@
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
+import 'package:ebidence/view/result_card.dart';
+import 'package:ebidence/view/result_card_row.dart';
+import 'package:ebidence/view/select_subject_page.dart';
 import 'package:ebidence/view/start_page.dart';
 import 'package:ebidence/viewmodel/beforequiz.dart';
 import 'package:ebidence/viewmodel/quiz1.dart';
@@ -15,7 +18,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
     navigatorKey: navigatorKey,
-    initialLocation: '/startpage',
+    initialLocation: '/selectsubject',
     routes: [
       GoRoute(
         path: '/beforequiz',
@@ -56,7 +59,8 @@ final router = GoRouter(
       GoRoute(
         path: '/result',
         builder: (context, state) {
-          return const ResultPage1();
+          final isCheakAllFalse = state.extra as bool? ?? false; // 安全な型キャスト
+          return ResultPage1(isCheakAllFalse);
         },
       ),
       GoRoute(
@@ -71,8 +75,23 @@ final router = GoRouter(
             return ResultPage(imageId: imageId);
           }),
       GoRoute(
+          path: '/result_flash_card',
+          builder: (context, state) {
+            return const ResultFlashCard();
+          }),
+      GoRoute(
+          path: '/selectsubject',
+          builder: (context, state) {
+            return const SelectSubjectPage();
+          }),
+      GoRoute(
           path: '/startpage',
           builder: (context, state) {
             return const StartPage();
+          }),
+      GoRoute(
+          path: '/result_card_row',
+          builder: (context, state) {
+            return const ResultCardRow();
           }),
     ]);

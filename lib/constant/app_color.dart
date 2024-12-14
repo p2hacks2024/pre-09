@@ -1,16 +1,19 @@
 import 'dart:ui';
 
 class AppColor {
+  // ignore: library_private_types_in_public_api
   static final _Brand brand = _Brand();
+  // ignore: library_private_types_in_public_api
   static final _Text text = _Text();
+  // ignore: library_private_types_in_public_api
   static final _Ui ui = _Ui();
 }
 
 class _Brand {
   final Color primary = const Color(0xFFFFFFFF);
-  final Color secondary = const Color(0xFFFF9D68);
+  final Color secondary = const Color(0xFFFFF9D68);
+  final Color secondaryLight = const Color(0xFFFFC966);
   final Color logo = const Color(0xFFFF9857);
-
   final Color tertiary = const Color(0xFF9ACCE2);
 }
 
@@ -22,6 +25,7 @@ class _Text {
   final Color white = const Color(0xFFFFFFFF);
   final Color link = const Color(0xFF6699ff);
   final Color darkgray = const Color(0xFF404040);
+  final Color black = const Color(0xFF000000);
 }
 
 class _Ui {

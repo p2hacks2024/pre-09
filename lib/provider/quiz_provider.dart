@@ -21,3 +21,8 @@ final currentQuestionProvider = Provider<String>((ref) {
   final selectedQuestions = ref.watch(quizProvider);
   return selectedQuestions.isNotEmpty ? selectedQuestions[index] : '';
 });
+
+final quizResultProvider = StateProvider<List<bool>>((ref) => []);
+
+// モードを保持するプロバイダー
+final modeProvider = StateProvider<String>((ref) => '');
