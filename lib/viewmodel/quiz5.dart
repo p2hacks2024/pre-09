@@ -83,9 +83,8 @@ class _QuizState extends ConsumerState<Quiz5> {
           quizResults.isNotEmpty && quizResults.every((result) => !result);
 
       //router.go('/result', extra: isCheckAllFalse); // 例えばクイズ終了画面に遷移
-      router.go('/resultcard',
-          extra:
-              isCheckAllFalse); //TODO if文で全部間違えてたらこっち(ref.watch(quizResultProvider))
+      router.go(
+          '/result_flash_card'); //TODO if文で全部間違えてたらこっち(ref.watch(quizResultProvider))
     }
   }
 

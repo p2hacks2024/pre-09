@@ -7,28 +7,18 @@ class ResultFlashCard extends ConsumerStatefulWidget {
   const ResultFlashCard({super.key});
 
   @override
-  ConsumerState<ResultFlashCard> createState() => _ResultFlashCardState();
+  ConsumerState<ResultFlashCard> createState() => _ResultFlashCard();
 }
 
-class _ResultFlashCardState extends ConsumerState<ResultFlashCard>
+class _ResultFlashCard extends ConsumerState<ResultFlashCard>
     with SingleTickerProviderStateMixin {
-  final List<ResultCard> resultCards = [];
+  List<ResultCard> resultCards = [];
   // final List<ResultCard> resultCards = [
-  //   ResultCard(
-  //       question: "あ",
-  //       answer: "a"),
-  //   ResultCard(
-  //       question: "い",
-  //       answer: "i"),
-  //   ResultCard(
-  //       question: "う",
-  //       answer: "u"),
-  //   ResultCard(
-  //       question: "え",
-  //       answer: "e"),
-  //   ResultCard(
-  //       question: "お",
-  //       answer: "o"),
+  //   ResultCard(question: "あ", answer: "a"),
+  //   ResultCard(question: "い", answer: "i"),
+  //   ResultCard(question: "う", answer: "u"),
+  //   ResultCard(question: "え", answer: "e"),
+  //   ResultCard(question: "お", answer: "o"),
   // ];
 
   late int currentIndex;
@@ -43,7 +33,7 @@ class _ResultFlashCardState extends ConsumerState<ResultFlashCard>
     currentIndex = 0;
     _controller = AnimationController(
         duration: const Duration(milliseconds: 300), vsync: this);
-    _animation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -2))
+    _animation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -1.5))
         .animate(_controller);
   }
 
@@ -66,53 +56,59 @@ class _ResultFlashCardState extends ConsumerState<ResultFlashCard>
 
   @override
   Widget build(BuildContext context) {
-    double deviceHeight = MediaQuery.of(context).size.height;
-    double deviceWidth = MediaQuery.of(context).size.width;
-    final quiz = ref.read(quizProvider);
+    final quiz = ref.watch(quizProvider);
     final quizResults = ref.watch(quizResultProvider);
 
     if (resultCards.isEmpty && quiz.isNotEmpty) {
+      debugPrint('if文とっぱ');
       for (var i = 0; i < quiz.length; i++) {
         if (quizResults[i] == false) {
+          debugPrint('2こ目のif文突破');
           resultCards.add(ResultCard(
             question: quiz[i],
             answer: QuizData.ebiQuizData[quiz[i]].toString(),
           ));
+          debugPrint(resultCards[i].answer);
         }
       }
     }
 
     return Scaffold(
-      body: Center(
-        child: isExistCards
-            ? AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) {
-                  return GestureDetector(
-                    onTap: () {
-                      _controller.forward().then((_) {
-                        _controller.reset();
-                        _nextCard();
-                      });
-                    },
-                    child: SlideTransition(
-                      position: _animation,
-                      child: _buildCard(),
-                    ),
-                  );
-                },
-              )
-            : const Text('カードなくなったよ'),
+      body: GestureDetector(
+        onVerticalDragUpdate: (details) {
+          _controller.value -= details.primaryDelta! / context.size!.height;
+        },
+        onVerticalDragEnd: (details) {
+          if (_controller.value > -0.5) {
+            _controller.forward().then((_) {
+              _controller.reset();
+              _nextCard();
+            });
+          }
+        },
+        child: Center(
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              if (isExistCards) {
+                return SlideTransition(
+                  position: _animation,
+                  child: _buildCard(),
+                );
+              } else {
+                return Text('カードなくなったよ');
+              }
+            },
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildCard() {
-    double deviceHeight = MediaQuery.of(context).size.height;
-    double deviceWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: deviceWidth / 1.5,
-      height: deviceHeight / 1.5,
+      width: 300,
+      height: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.black),
@@ -124,16 +120,16 @@ class _ResultFlashCardState extends ConsumerState<ResultFlashCard>
           children: [
             Text(
               resultCards[currentIndex].question,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.black,
-                  fontSize: deviceWidth / 10,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             Text(
               resultCards[currentIndex].answer,
-              style: TextStyle(color: Colors.red, fontSize: deviceWidth / 20),
+              style: const TextStyle(color: Colors.black, fontSize: 16),
               textAlign: TextAlign.center,
             ),
           ],

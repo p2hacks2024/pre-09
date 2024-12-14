@@ -1,6 +1,7 @@
 import 'package:ebidence/view/developer/send_firebase.dart';
 import 'package:ebidence/view/result.dart';
 import 'package:ebidence/view/result_card.dart';
+import 'package:ebidence/view/result_card_row.dart';
 import 'package:ebidence/view/select_subject_page.dart';
 import 'package:ebidence/view/start_page.dart';
 import 'package:ebidence/viewmodel/beforequiz.dart';
@@ -74,9 +75,9 @@ final router = GoRouter(
             return ResultPage(imageId: imageId);
           }),
       GoRoute(
-          path: '/resultcard',
+          path: '/result_flash_card',
           builder: (context, state) {
-            return ResultFlashCard();
+            return const ResultFlashCard();
           }),
       GoRoute(
           path: '/selectsubject',
@@ -87,5 +88,10 @@ final router = GoRouter(
           path: '/startpage',
           builder: (context, state) {
             return const StartPage();
+          }),
+      GoRoute(
+          path: '/result_card_row',
+          builder: (context, state) {
+            return const ResultCardRow();
           }),
     ]);
