@@ -26,16 +26,45 @@
 プログラマー３人、デザイナー２人（仮）
 
 開発における工夫した点  
-・問題の生成やXのポストに関した技術（仮）
-・問題の自動生成系（仮）
+・プロジェクトマネジメント
+　　・GitHub IssuesによるIssue管理
+　　　　・mainにマージする前には必ずレビューを受けるようにした
+　　　　・レビューにはLGTM画像を使用するようにし，レビューを受ける側もする側もクスッと笑える瞬間を作った．マージした時には褒めたり感謝を伝えることでエンジニアがチームで楽しく１週間開発を進められるようにした．<img width="720" alt="スクリーンショット 2024-12-14 14 52 29" src="https://github.com/user-attachments/assets/0768512f-e4d4-46b9-80c6-c3d4fe0f5c9e" />
+<img width="723" alt="スクリーンショット 2024-12-14 14 55 25" src="https://github.com/user-attachments/assets/714e0eae-857c-4417-a4c0-fe350f0df073" />
+
+
+
+　　　　・デザインのIssueも同じように管理することで，今何が終わっていて何が終わっていないのかを全員が把握できるようにした．
+・技術面
+　・デザイン
+ 　　頑張ったね
+  ・riverPodsの使用
+  　・riverPodsを使ったことがないエンジニアが過半数であったが，値の受け渡しを無理やり行うのではなく，新しい技術に触れて，効率化した．
+   ・動的OGPの実装
+   　・TSでfunctionsを書くこと，Firebase StorageとFirestoreとの連携を行うことによって，動的OGPを実装した．
+    ・どうしても分からないことは頼れる人に聞いてみる
+    　・エンジニア３人は最長でもプログラミング歴1年8ヶ月程度であったためインプット量に欠け，長くやってきた人たちには技術的には及ばない．そこで質問することを恐れず，積極的にメンターへの質問を行い，開発を進めた．
+
 
 ## 開発技術 
 
 利用したプログラミング言語  
-（わからん…コーダー達にお任せ）
+Dart,TypeScript
 
 利用したフレームワーク・ライブラリ  
-（わからん…コーダー達ｎ（略
+フレームワーク：Flutter
+ライブラリ
+・ cached_network_image
+・cloud_firestore
+・firebase_core
+・firebase_storage
+・drop_shadow_image
+・flutter_riverpod
+・go_router
+・google_fonts
+・intl
+・url_launcher
+
 
 その他開発に使用したツール・サービス
 フィグマ
@@ -44,3 +73,8 @@
 アドビイラレ
 アドビアニメ
 （一旦仮）
+
+Github
+Discord
+FirebaseStorage
+FirebaseStore
