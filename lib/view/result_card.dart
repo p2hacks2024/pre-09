@@ -1,5 +1,6 @@
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/provider/quiz_provider.dart';
+import 'package:ebidence/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -90,20 +91,29 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
             });
           }
         },
-        child: Center(
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              if (isExistCards) {
-                return SlideTransition(
-                  position: _animation,
-                  child: _buildCard(),
-                );
-              } else {
-                return Text('カードなくなったよ');
-              }
-            },
-          ),
+        child: Column(
+          children: [
+            // ElevatedButton(
+            //     onPressed: () {
+            //       router.go('/beforequiz');
+            //     },
+            //     child: Text('beforequizへ')),
+            Center(
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  if (isExistCards) {
+                    return SlideTransition(
+                      position: _animation,
+                      child: _buildCard(),
+                    );
+                  } else {
+                    return Text('カードなくなったよ');
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

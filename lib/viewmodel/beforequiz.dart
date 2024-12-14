@@ -39,6 +39,10 @@ class Beforequiz extends ConsumerWidget {
                     .read(quizProvider.notifier)
                     .generateRandomQuestions(allEbiQuestions, 5);
 
+                // ランダムに選ばれた問題をデバッグプリント
+                final selectedQuestions = ref.read(quizProvider);
+                print("ランダムに選ばれた問題: $selectedQuestions");
+
                 // 次の画面に遷移
                 router.go('/quiz1');
               },
@@ -56,6 +60,10 @@ class Beforequiz extends ConsumerWidget {
                 ref
                     .read(quizProvider.notifier)
                     .generateRandomQuestions(allL1Questions, 5);
+
+                // ランダムに選ばれた問題をデバッグプリント
+                final selectedQuestions = ref.read(quizProvider);
+                print("ランダムに選ばれた問題: $selectedQuestions");
 
                 // 次の画面に遷移
                 router.go('/quiz1');
