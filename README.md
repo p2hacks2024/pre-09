@@ -23,7 +23,8 @@
 ## 開発体制  
 
 # 役割分担  
-プログラマー３人、デザイナー２人（仮）
+プログラマー:木下瑠理　中西瞳俐　澤田萌衣
+デザイナー:小松靖知　松山陽大
 
 **開発における工夫した点**  
 ・プロジェクトマネジメント  
@@ -54,7 +55,7 @@ Dart,TypeScript
 **利用したフレームワーク・ライブラリ**  
 フレームワーク：Flutter
 ライブラリ
-・ cached_network_image
+・cached_network_image
 ・cloud_firestore
 ・firebase_core
 ・firebase_storage
@@ -67,15 +68,15 @@ Dart,TypeScript
 
 
 **その他開発に使用したツール・サービス**
-Miro
-フィグマ
-キャンバ
-ギットハブ
-アドビイラレ
-アドビアニメ
-（一旦仮）
-
-Github
+Adobe Animate
+Adobe Illustrator
+Audacity
+Blender
+Canva
+Clipchamp
 Discord
+Figma
 FirebaseStorage
 FirebaseStore
+GitHub
+Miro
