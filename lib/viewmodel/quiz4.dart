@@ -222,7 +222,7 @@ class _QuizState extends ConsumerState<Quiz4> with TickerProviderStateMixin {
             if (_isGifInitialized)
               Gif(
                 controller: _gifController,
-                image: const AssetImage('assets/images/evi_allmiss.gif'),
+                image: const AssetImage('assets/gifs/evi_allmiss.gif'),
                 width: 150,
                 height: 100,
                 fit: BoxFit.contain,

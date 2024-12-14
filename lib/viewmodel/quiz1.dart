@@ -25,6 +25,8 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
   late GifController _gifController;
   bool _isGifInitialized = false;
 
+  bool isCheckTrue = true;
+
   @override
   void initState() {
     super.initState();
@@ -54,11 +56,13 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
+      isCheckTrue = true;
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
+      isCheckTrue = false;
     }
 
     if (_isGifInitialized) {
@@ -70,22 +74,21 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
   }
 
   void _l1CheckAnswer(String currentQuestion) {
+    final correctAnswer = QuizData.l1QuizData[currentQuestion];
     setState(() {
       isTextEnabled = false;
       _isButtonPressed = true;
     });
-    final correctAnswer = QuizData.l1QuizData[currentQuestion];
-    setState(() {
-      isTextEnabled = false;
-    });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
-      _feedback.value = '正解！';
+      _feedback.value = '正解';
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
+      isCheckTrue = true;
     } else {
-      _feedback.value = '不正解。正しい答えは: $correctAnswer';
+      _feedback.value = '不正解';
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
+      isCheckTrue = false;
     }
 
     if (_isGifInitialized) {
@@ -219,14 +222,43 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            if (_isGifInitialized)
-              Gif(
-                controller: _gifController,
-                image: const AssetImage('assets/images/evi_allmiss.gif'),
-                width: 150,
-                height: 100,
-                fit: BoxFit.contain,
+            // if (!_isGifInitialized) ...[
+            //   Container(
+            //     width: 325,
+            //     height: 325,
+            //   ),
+            //   Align(
+            //     alignment: Alignment(0.9, 1),
+            //     child: Image.asset(
+            //       'images/logo.png',
+            //       width: 325,
+            //       height: 325,
+            //     ),
+            //   ),
+            // ],
+            if (_isGifInitialized && isCheckTrue == true) ...[
+              Align(
+                alignment: Alignment(0.9, 1),
+                child: Gif(
+                  controller: _gifController,
+                  image: const AssetImage('assets/gifs/evi_happy.gif'),
+                  width: 325,
+                  height: 325,
+                  fit: BoxFit.contain,
+                ),
               ),
+            ] else if (_isGifInitialized && isCheckTrue == false) ...[
+              Align(
+                alignment: Alignment(0.9, 1),
+                child: Gif(
+                  controller: _gifController,
+                  image: const AssetImage('assets/gifs/aor_cam1.gif'),
+                  width: 325,
+                  height: 325,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ],
             const Spacer(),
           ],
         ),

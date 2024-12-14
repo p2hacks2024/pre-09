@@ -1,3 +1,4 @@
+import 'package:ebidence/constant/app_color.dart';
 import 'package:ebidence/firebase_options.dart';
 import 'package:ebidence/routes.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'evidence',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.brand.primary),
         fontFamily: 'Inter',
         fontFamilyFallback: ['NotoSansJP'],
         useMaterial3: true,
