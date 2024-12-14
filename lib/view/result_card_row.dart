@@ -17,7 +17,7 @@ class _ResultCardRowState extends ConsumerState<ResultCardRow> {
   Widget build(BuildContext context) {
     final double deviceHeight = MediaQuery.of(context).size.height;
     final double deviceWidth = MediaQuery.of(context).size.width;
-    final resultCardList = ref.watch(resultCardListProveder); //List<ResultCard>
+    final resultCardList = ref.watch(resultCardListProvider); //List<ResultCard>
 
     return Scaffold(
       appBar: PreferredSize(

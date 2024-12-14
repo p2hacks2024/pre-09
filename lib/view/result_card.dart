@@ -55,7 +55,7 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
     final quizResults = ref.watch(quizResultProvider); //List<bool>
     final quizMode = ref.watch(modeProvider); //String
 
-    final resultCardList = ref.watch(resultCardListProveder); //List<ResultCard>
+    final resultCardList = ref.watch(resultCardListProvider); //List<ResultCard>
 
     if (resultCardList.isEmpty && quiz.isNotEmpty && quizMode == 'ebimode') {
       for (var i = 0; i < quiz.length; i++) {

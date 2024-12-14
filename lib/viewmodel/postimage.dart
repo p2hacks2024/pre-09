@@ -33,6 +33,12 @@ class _PostImageState extends ConsumerState<PostImage> {
   void initState() {
     super.initState();
     _updateContainerRef();
+    debugPrint('a');
+    //_uploadContainerImageAndSaveToFirestore();
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   await _uploadContainerImageAndSaveToFirestore();
+    // });
+    debugPrint('b');
   }
 
   /// 現在のタイムスタンプを用いてReferenceを更新
@@ -63,7 +69,7 @@ class _PostImageState extends ConsumerState<PostImage> {
     }
   }
 
-  Future<void> uploadContainerImageAndSaveToFirestore() async {
+  Future<void> _uploadContainerImageAndSaveToFirestore() async {
     try {
       // タイムスタンプを使用してファイル名を更新
       _updateContainerRef();
@@ -111,7 +117,7 @@ class _PostImageState extends ConsumerState<PostImage> {
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             RepaintBoundary(
               key: _repaintBoundaryKey,
               child: Container(
@@ -141,7 +147,7 @@ class _PostImageState extends ConsumerState<PostImage> {
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.black.withOpacity(0.2),
-                                          offset: Offset(0, 4),
+                                          offset: const Offset(0, 4),
                                           blurRadius: 2,
                                           spreadRadius: 0.5,
                                         ),
@@ -160,7 +166,7 @@ class _PostImageState extends ConsumerState<PostImage> {
                                           color: Colors.black
                                               .withOpacity(0.1), // 影の色と透明度
                                           blurRadius: 4, // 影のぼかし半径
-                                          offset: Offset(0, 4), // 下側に影を移動
+                                          offset: const Offset(0, 4), // 下側に影を移動
                                         ),
                                       ],
                                     ),
@@ -209,7 +215,7 @@ class _PostImageState extends ConsumerState<PostImage> {
                                       color: Colors.white,
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -237,13 +243,13 @@ class _PostImageState extends ConsumerState<PostImage> {
                                       ),
                                     ),
                                   ),
-                                  if (i < 4) SizedBox(width: 10),
+                                  if (i < 4) const SizedBox(width: 10),
                                 ],
                               ],
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 150,
                         ),
                         Column(
@@ -267,7 +273,9 @@ class _PostImageState extends ConsumerState<PostImage> {
             ),
             const SizedBox(height: 16),
             TextButton(
-              onPressed: uploadContainerImageAndSaveToFirestore,
+              onPressed: () {
+                _uploadContainerImageAndSaveToFirestore();
+              },
               child: const Text('ContainerをアップロードしてFirestoreに保存'),
             ),
           ],
