@@ -14,13 +14,6 @@ class ResultFlashCard extends ConsumerStatefulWidget {
 class _ResultFlashCard extends ConsumerState<ResultFlashCard>
     with SingleTickerProviderStateMixin {
   List<ResultCard> resultCards = [];
-  // final List<ResultCard> resultCards = [
-  //   ResultCard(question: "あ", answer: "a"),
-  //   ResultCard(question: "い", answer: "i"),
-  //   ResultCard(question: "う", answer: "u"),
-  //   ResultCard(question: "え", answer: "e"),
-  //   ResultCard(question: "お", answer: "o"),
-  // ];
 
   late int currentIndex;
   late AnimationController _controller;
@@ -50,7 +43,6 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
         currentIndex++;
       } else {
         isExistCards = false;
-        debugPrint('カード終わったよ');
       }
     });
   }
@@ -62,10 +54,8 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
     final quizMode = ref.watch(modeProvider);
 
     if (resultCards.isEmpty && quiz.isNotEmpty && quizMode == 'ebimode') {
-      debugPrint('if文とっぱ');
       for (var i = 0; i < quiz.length; i++) {
         if (quizResults[i] == false) {
-          debugPrint('2こ目のif文突破');
           resultCards.add(ResultCard(
             question: quiz[i],
             answer: QuizData.ebiQuizData[quiz[i]].toString(),
@@ -76,10 +66,8 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
     }
 
     if (resultCards.isEmpty && quiz.isNotEmpty && quizMode == 'level1mode') {
-      debugPrint('if文とっぱ');
       for (var i = 0; i < quiz.length; i++) {
         if (quizResults[i] == false) {
-          debugPrint('2こ目のif文突破');
           resultCards.add(ResultCard(
             question: quiz[i],
             answer: QuizData.l1QuizData[quiz[i]].toString(),

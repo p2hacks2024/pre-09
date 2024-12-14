@@ -18,9 +18,8 @@ class Quiz1 extends ConsumerStatefulWidget {
 class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
   final _controller = TextEditingController();
   final _feedback = ValueNotifier<String>('');
-  bool _isCorrect = false;
   bool isTextEnabled = true;
-  bool _isButtonDisabled = false; // ボタンの状態を制御
+// ボタンの状態を制御
   bool _isButtonPressed = false; // Track if button is pressed
 
   late GifController _gifController;
@@ -54,11 +53,9 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
     });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
-      _isCorrect = true;
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
-      _isCorrect = false;
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
@@ -83,11 +80,9 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
     });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
-      _isCorrect = true;
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
-      _isCorrect = false;
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
