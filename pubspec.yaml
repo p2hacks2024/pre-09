@@ -42,6 +42,7 @@ flutter:
   assets:
     - assets/images/
     - assets/movies/
+    - assets/gifs/
 
   fonts:
     - family: NotoSansJP

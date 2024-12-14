@@ -9,6 +9,7 @@ import 'package:ebidence/function/x_share.dart';
 import 'package:ebidence/provider/quiz_provider.dart';
 import 'package:ebidence/view/result_card_row.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:ebidence/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

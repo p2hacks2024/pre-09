@@ -1,3 +1,4 @@
+import 'package:ebidence/constant/aor.dart';
 import 'package:ebidence/constant/app_color.dart';
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ebidence/provider/quiz_provider.dart';
 import 'package:gif/gif.dart';
+import 'dart:math';
 
 class Quiz3 extends ConsumerStatefulWidget {
   const Quiz3({super.key});
@@ -25,6 +27,8 @@ class _QuizState extends ConsumerState<Quiz3> with TickerProviderStateMixin {
   late GifController _gifController;
   bool _isGifInitialized = false;
 
+  bool? isCheckTrue;
+  String _randomGifName = 'real';
   @override
   void initState() {
     super.initState();
@@ -37,6 +41,16 @@ class _QuizState extends ConsumerState<Quiz3> with TickerProviderStateMixin {
         _goToNextQuestion();
       }
     });
+  }
+
+  String _getRandomGifName() {
+    final randomIndex = Random().nextInt(Aor().aorGif.length);
+    String selectedGif = Aor().aorGif[randomIndex];
+
+    // 選ばれたGIFをリストから削除
+    Aor().aorGif.remove(selectedGif);
+
+    return selectedGif;
   }
 
   @override
@@ -54,21 +68,18 @@ class _QuizState extends ConsumerState<Quiz3> with TickerProviderStateMixin {
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
-      debugPrint('正解');
+      setState(() {
+        isCheckTrue = true;
+      });
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
-
-      //間違えた問題をriverpodのListに入れる
-      resultCards.add(ResultCard(
-        question: currentQuestion,
-        answer: correctAnswer.toString(),
-      ));
-      debugPrint('不正解');
-      debugPrint('aiueo::${resultCards.length.toString()}');
-      debugPrint('aiueo::${resultCards.last.question}');
+      setState(() {
+        isCheckTrue = false;
+        _randomGifName = _getRandomGifName();
+      });
     }
 
     if (_isGifInitialized) {
@@ -88,17 +99,18 @@ class _QuizState extends ConsumerState<Quiz3> with TickerProviderStateMixin {
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
+      setState(() {
+        isCheckTrue = true;
+      });
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
-
-      //間違えた問題をriverpodのListに入れる
-      resultCards.add(ResultCard(
-        question: currentQuestion,
-        answer: correctAnswer.toString(),
-      ));
+      setState(() {
+        isCheckTrue = false;
+        _randomGifName = _getRandomGifName();
+      });
     }
 
     if (_isGifInitialized) {
@@ -127,8 +139,6 @@ class _QuizState extends ConsumerState<Quiz3> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final currentQuestion = ref.watch(currentQuestionProvider);
     final double deviceHeight = MediaQuery.of(context).size.height;
-    final double deviceWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(deviceHeight / 5),
@@ -166,9 +176,21 @@ class _QuizState extends ConsumerState<Quiz3> with TickerProviderStateMixin {
                     ),
                     child: TextField(
                       controller: _controller,
-                      autofocus: true,
                       enabled: isTextEnabled,
-                      onSubmitted: (_) => _checkAnswer(currentQuestion),
+                      autofocus: true,
+                      onSubmitted: (_) {
+                        if (!_isButtonPressed) {
+                          setState(() {
+                            _isButtonPressed = true; // ボタンを押せないようにする
+                          });
+                          final mode = ref.read(modeProvider); // 現在のモードを取得
+                          if (mode == 'ebimode') {
+                            _checkAnswer(currentQuestion);
+                          } else if (mode == 'level1mode') {
+                            _l1CheckAnswer(currentQuestion);
+                          }
+                        }
+                      },
                       cursorColor: AppColor.brand.secondary,
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
@@ -236,14 +258,41 @@ class _QuizState extends ConsumerState<Quiz3> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            if (_isGifInitialized)
-              Gif(
-                controller: _gifController,
-                image: const AssetImage('assets/images/evi_allmiss.gif'),
-                width: 150,
-                height: 100,
-                fit: BoxFit.contain,
+            if (isCheckTrue == null) ...[
+              Align(
+                alignment: Alignment(0.9, 1),
+                child: Gif(
+                  controller: _gifController,
+                  image: const AssetImage('assets/gifs/aor_cam1.gif'),
+                  width: 325,
+                  height: 325,
+                  fit: BoxFit.contain,
+                ),
               ),
+            ],
+            if (_isGifInitialized && isCheckTrue == true) ...[
+              Align(
+                alignment: Alignment(0.9, 1),
+                child: Gif(
+                  controller: _gifController,
+                  image: const AssetImage('assets/gifs/evi_happy.gif'),
+                  width: 325,
+                  height: 325,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ] else if (_isGifInitialized && isCheckTrue == false) ...[
+              Align(
+                alignment: Alignment(0.9, 1),
+                child: Gif(
+                  controller: _gifController,
+                  image: AssetImage('assets/gifs/aor_$_randomGifName.gif'),
+                  width: 325,
+                  height: 325,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ],
             const Spacer(),
           ],
         ),
