@@ -57,9 +57,10 @@ class _QuizState extends ConsumerState<Quiz5> {
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       _isCorrect = false;
-      ref
-          .read(quizResultProvider.notifier)
-          .update((state) => [...state, false]);
+      ref.read(quizResultProvider.notifier).update((state) {
+        debugPrint(state.toString());
+        return [...state, false];
+      });
     }
 
     if (_isVideoInitialized) {

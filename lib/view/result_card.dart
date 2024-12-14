@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ResultFlashCard extends ConsumerStatefulWidget {
+  //final bool isCheakAllFalse;
   const ResultFlashCard({super.key});
 
   @override
@@ -33,7 +34,7 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
     currentIndex = 0;
     _controller = AnimationController(
         duration: const Duration(milliseconds: 300), vsync: this);
-    _animation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -1.5))
+    _animation = Tween<Offset>(begin: Offset.zero, end: const Offset(0.0, -2.5))
         .animate(_controller);
   }
 
@@ -68,7 +69,7 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
             question: quiz[i],
             answer: QuizData.ebiQuizData[quiz[i]].toString(),
           ));
-          debugPrint(resultCards[i].answer);
+          debugPrint(resultCards.last.answer);
         }
       }
     }
