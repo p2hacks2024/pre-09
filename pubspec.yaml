@@ -16,14 +16,21 @@ dependencies:
   flutter:
     sdk: flutter
   drop_shadow_image: ^0.9.1
-
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.3.3
   flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+  riverpod_generator: ^2.6.3
   go_router: ^14.6.2
   google_fonts: ^6.2.1
   intl: ^0.20.1
   screen_recorder: ^0.3.0
   url_launcher: ^6.3.1
   video_player: ^2.9.2
+  flash_card: ^0.1.0
+  gif: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -38,13 +45,12 @@ flutter:
 
   fonts:
     - family: NotoSansJP
-      fonts: 
+      fonts:
         - asset: assets/fonts/NotoSansJP-Bold.ttf
     - family: Inter
-      fonts: 
+      fonts:
         - asset: assets/fonts/Inter_18pt-ExtraBold.ttf
         - asset: assets/fonts/Inter_24pt-ExtraBold.ttf
         - asset: assets/fonts/Inter_28pt-ExtraBold.ttf
- 
-  uses-material-design: true
 
+  uses-material-design: true

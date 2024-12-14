@@ -1,12 +1,5 @@
-import 'package:ebidence/view/select_subject_page.dart';
-import 'package:ebidence/view/start_page.dart';
 import 'package:ebidence/firebase_options.dart';
-import 'package:ebidence/function/gif_recorder.dart';
-import 'package:ebidence/function/x_share.dart';
-import 'package:ebidence/view/developer/send_firebase.dart';
-import 'package:ebidence/viewmodel/quiz1.dart';
 import 'package:ebidence/routes.dart';
-import 'package:ebidence/viewmodel/quiz2.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
@@ -32,8 +25,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'evidence',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
@@ -42,7 +35,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routerConfig: router,
-
     );
   }
 }
