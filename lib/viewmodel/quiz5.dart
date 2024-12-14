@@ -1,10 +1,11 @@
+// quiz1.dart
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
 import 'package:ebidence/viewmodel/ebidence_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ebidence/provider/quiz_provider.dart';
-import 'package:video_player/video_player.dart';
+import 'package:gif/gif.dart';
 
 class Quiz5 extends ConsumerStatefulWidget {
   const Quiz5({super.key});
@@ -13,30 +14,24 @@ class Quiz5 extends ConsumerStatefulWidget {
   ConsumerState<Quiz5> createState() => _QuizState();
 }
 
-class _QuizState extends ConsumerState<Quiz5> {
+class _QuizState extends ConsumerState<Quiz5> with TickerProviderStateMixin {
   final _controller = TextEditingController();
   final _feedback = ValueNotifier<String>('');
   bool _isCorrect = false;
+  bool isTextEnabled = true;
 
-  late VideoPlayerController _videoPlayerController;
-  bool _isVideoInitialized = false;
+  late GifController _gifController;
+  bool _isGifInitialized = false;
 
   @override
   void initState() {
     super.initState();
 
-    // 動画プレーヤーの初期化
-    _videoPlayerController = VideoPlayerController.asset(
-      'assets/movies/ebi.mp4',
-    )..initialize().then((_) {
-        setState(() {
-          _isVideoInitialized = true;
-        });
-      });
-
-    _videoPlayerController.addListener(() {
-      if (_videoPlayerController.value.position ==
-          _videoPlayerController.value.duration) {
+    // GifControllerを初期化
+    _gifController = GifController(vsync: this);
+    _isGifInitialized = true;
+    _gifController.addListener(() {
+      if (_gifController.value == 1) {
         _goToNextQuestion();
       }
     });
@@ -44,12 +39,15 @@ class _QuizState extends ConsumerState<Quiz5> {
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    _gifController.dispose();
     super.dispose();
   }
 
   void _checkAnswer(String currentQuestion) {
     final correctAnswer = QuizData.ebiQuizData[currentQuestion];
+    setState(() {
+      isTextEnabled = false;
+    });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       _isCorrect = true;
@@ -57,16 +55,16 @@ class _QuizState extends ConsumerState<Quiz5> {
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       _isCorrect = false;
-      ref.read(quizResultProvider.notifier).update((state) {
-        debugPrint(state.toString());
-        return [...state, false];
-      });
+      ref
+          .read(quizResultProvider.notifier)
+          .update((state) => [...state, false]);
     }
 
-    if (_isVideoInitialized) {
-      _videoPlayerController
-        ..seekTo(Duration.zero)
-        ..play();
+    if (_isGifInitialized) {
+      print("Playing GIF 5");
+      _gifController
+        ..reset()
+        ..forward(); // GIFの再生
     }
   }
 
@@ -117,6 +115,9 @@ class _QuizState extends ConsumerState<Quiz5> {
             const SizedBox(height: 16),
             TextField(
               controller: _controller,
+              autofocus: true,
+              enabled: isTextEnabled,
+              onSubmitted: (_) => _checkAnswer(currentQuestion),
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '答えを入力',
@@ -142,14 +143,13 @@ class _QuizState extends ConsumerState<Quiz5> {
               },
             ),
             const SizedBox(height: 16),
-            if (_isVideoInitialized)
-              Container(
-                width: 200,
-                height: 150,
-                child: AspectRatio(
-                  aspectRatio: _videoPlayerController.value.aspectRatio,
-                  child: VideoPlayer(_videoPlayerController),
-                ),
+            if (_isGifInitialized)
+              Gif(
+                controller: _gifController,
+                image: const AssetImage('assets/images/evi_allmiss.gif'),
+                width: 150,
+                height: 100,
+                fit: BoxFit.contain,
               ),
             const Spacer(),
           ],
