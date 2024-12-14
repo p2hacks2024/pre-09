@@ -1,4 +1,6 @@
 import 'package:ebidence/constant/app_color.dart';
+import 'package:ebidence/constant/quiz_data.dart';
+import 'package:ebidence/provider/quiz_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,6 +9,8 @@ class PostImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final quiz = ref.watch(quizProvider);
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -96,35 +100,69 @@ class PostImage extends ConsumerWidget {
                           ),
                           Row(
                             children: [
-                              Container(
-                                color: AppColor.ui.shadow,
-                                width: 110,
-                                height: 90,
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                color: AppColor.ui.shadow,
-                                width: 110,
-                                height: 90,
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                color: AppColor.ui.shadow,
-                                width: 110,
-                                height: 90,
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                color: AppColor.ui.shadow,
-                                width: 110,
-                                height: 90,
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                color: AppColor.ui.shadow,
-                                width: 110,
-                                height: 90,
-                              ),
+                              for (int i = 0; i < 5; i++) ...[
+                                Container(
+                                  width: 110,
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: Colors.black),
+                                    color: AppColor.ui.shadow,
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          quiz[i],
+                                          //'あいうえお',
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text(
+                                          QuizData.ebiQuizData[quiz[i]]
+                                              .toString(),
+                                          //'aiueo',
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                if (i < 4) SizedBox(width: 10),
+                              ],
+                              // Container(
+                              //   color: AppColor.ui.shadow,
+                              //   width: 110,
+                              //   height: 90,
+                              // ),
+                              // SizedBox(width: 10),
+                              // Container(
+                              //   color: AppColor.ui.shadow,
+                              //   width: 110,
+                              //   height: 90,
+                              // ),
+                              // SizedBox(width: 10),
+                              // Container(
+                              //   color: AppColor.ui.shadow,
+                              //   width: 110,
+                              //   height: 90,
+                              // ),
+                              // SizedBox(width: 10),
+                              // Container(
+                              //   color: AppColor.ui.shadow,
+                              //   width: 110,
+                              //   height: 90,
+                              // ),
                             ],
                           )
                         ],

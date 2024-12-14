@@ -1,4 +1,5 @@
 // quiz_provider.dart
+import 'package:ebidence/view/result_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final quizProvider = StateNotifierProvider<QuizNotifier, List<String>>((ref) {
@@ -26,3 +27,6 @@ final quizResultProvider = StateProvider<List<bool>>((ref) => []);
 
 // モードを保持するプロバイダー
 final modeProvider = StateProvider<String>((ref) => '');
+
+//間違えた問題のリストを保持
+final resultCardListProveder = StateProvider<List<ResultCard>>((ref) => []);
