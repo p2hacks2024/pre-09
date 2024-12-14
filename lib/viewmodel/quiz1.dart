@@ -2,6 +2,7 @@
 import 'package:ebidence/constant/app_color.dart';
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
+import 'package:ebidence/view/result_card.dart';
 import 'package:ebidence/viewmodel/ebidence_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
   final _controller = TextEditingController();
   final _feedback = ValueNotifier<String>('');
   bool isTextEnabled = true;
+  List<ResultCard> resultCards = [];
 // ボタンの状態を制御
   bool _isButtonPressed = false; // Track if button is pressed
 
@@ -59,6 +61,12 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
+
+      //間違えた問題をriverpodのListに入れる
+      resultCards.add(ResultCard(
+        question: currentQuestion,
+        answer: correctAnswer.toString(),
+      ));
     }
 
     if (_isGifInitialized) {
@@ -75,9 +83,6 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
       _isButtonPressed = true;
     });
     final correctAnswer = QuizData.l1QuizData[currentQuestion];
-    setState(() {
-      isTextEnabled = false;
-    });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
@@ -86,6 +91,12 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
+
+      //間違えた問題をriverpodのListに入れる
+      resultCards.add(ResultCard(
+        question: currentQuestion,
+        answer: correctAnswer.toString(),
+      ));
     }
 
     if (_isGifInitialized) {
@@ -97,8 +108,12 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
   }
 
   void _goToNextQuestion() {
+    debugPrint('1');
+    ref.read(currentQuestionIndexProvider.notifier).state = 0;
+    debugPrint('2');
     final currentIndex = ref.read(currentQuestionIndexProvider);
     final totalQuestions = ref.read(quizProvider).length;
+    debugPrint('3');
 
     // 次の問題へ進む
     if (currentIndex + 1 < totalQuestions) {
