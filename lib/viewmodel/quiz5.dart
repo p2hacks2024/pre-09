@@ -37,10 +37,6 @@ class _QuizState extends ConsumerState<Quiz5> with TickerProviderStateMixin {
         _goToNextQuestion();
       }
     });
-    // ボタンを無効化
-    setState(() {
-      _isButtonPressed = true;
-    });
   }
 
   @override
@@ -53,6 +49,7 @@ class _QuizState extends ConsumerState<Quiz5> with TickerProviderStateMixin {
     final correctAnswer = QuizData.ebiQuizData[currentQuestion];
     setState(() {
       isTextEnabled = false;
+      _isButtonPressed = true;
     });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
@@ -76,6 +73,10 @@ class _QuizState extends ConsumerState<Quiz5> with TickerProviderStateMixin {
 
   void _l1CheckAnswer(String currentQuestion) {
     final correctAnswer = QuizData.l1QuizData[currentQuestion];
+    setState(() {
+      isTextEnabled = false;
+      _isButtonPressed = true;
+    });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       _isCorrect = true;

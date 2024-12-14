@@ -48,6 +48,7 @@ class _QuizState extends ConsumerState<Quiz2> with TickerProviderStateMixin {
     final correctAnswer = QuizData.ebiQuizData[currentQuestion];
     setState(() {
       isTextEnabled = false;
+      _isButtonPressed = true;
     });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
@@ -70,6 +71,10 @@ class _QuizState extends ConsumerState<Quiz2> with TickerProviderStateMixin {
   }
 
   void _l1CheckAnswer(String currentQuestion) {
+    setState(() {
+      isTextEnabled = false;
+      _isButtonPressed = true;
+    });
     final correctAnswer = QuizData.l1QuizData[currentQuestion];
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';

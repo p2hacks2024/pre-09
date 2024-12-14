@@ -21,6 +21,7 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
   bool _isCorrect = false;
   bool isTextEnabled = true;
   bool _isButtonDisabled = false; // ボタンの状態を制御
+  bool _isButtonPressed = false; // Track if button is pressed
 
   late GifController _gifController;
   bool _isGifInitialized = false;
@@ -37,10 +38,6 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
         _goToNextQuestion();
       }
     });
-    // ボタンを無効化
-    setState(() {
-      _isButtonDisabled = true;
-    });
   }
 
   @override
@@ -53,6 +50,7 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
     final correctAnswer = QuizData.ebiQuizData[currentQuestion];
     setState(() {
       isTextEnabled = false;
+      _isButtonPressed = true;
     });
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
@@ -65,9 +63,20 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
     }
+
+    if (_isGifInitialized) {
+      print("Playing GIF 1");
+      _gifController
+        ..reset()
+        ..forward(); // GIFの再生
+    }
   }
 
   void _l1CheckAnswer(String currentQuestion) {
+    setState(() {
+      isTextEnabled = false;
+      _isButtonPressed = true;
+    });
     final correctAnswer = QuizData.l1QuizData[currentQuestion];
     setState(() {
       isTextEnabled = false;
@@ -82,6 +91,13 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
       ref
           .read(quizResultProvider.notifier)
           .update((state) => [...state, false]);
+    }
+
+    if (_isGifInitialized) {
+      print("Playing GIF 1");
+      _gifController
+        ..reset()
+        ..forward(); // GIFの再生
     }
   }
 
@@ -185,7 +201,7 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
                             Colors.transparent, // ElevatedButton自身の影を無効化
                         elevation: 0, // ElevatedButtonの標準影をオフ
                       ),
-                      onPressed: _isButtonDisabled
+                      onPressed: _isButtonPressed
                           ? null // ボタンが無効化されている場合
                           : () {
                               final mode = ref.read(modeProvider); // 現在のモードを取得
