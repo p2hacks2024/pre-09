@@ -2,6 +2,7 @@ import 'package:ebidence/constant/aor.dart';
 import 'package:ebidence/constant/app_color.dart';
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
+import 'package:ebidence/view/result_card.dart';
 import 'package:ebidence/viewmodel/ebidence_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ class _QuizState extends ConsumerState<Quiz4> with TickerProviderStateMixin {
   final _feedback = ValueNotifier<String>('');
   bool isTextEnabled = true;
   bool _isButtonPressed = false; // Track if button is pressed
+  List<ResultCard> resultCards = [];
 
   late GifController _gifController;
   bool _isGifInitialized = false;
@@ -65,6 +67,7 @@ class _QuizState extends ConsumerState<Quiz4> with TickerProviderStateMixin {
     final correctAnswer = QuizData.ebiQuizData[currentQuestion];
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
+      debugPrint('正解');
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
       setState(() {
         isCheckTrue = true;

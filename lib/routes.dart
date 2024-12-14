@@ -89,9 +89,4 @@ final router = GoRouter(
           builder: (context, state) {
             return const StartPage();
           }),
-      GoRoute(
-          path: '/result_card_row',
-          builder: (context, state) {
-            return const ResultCardRow();
-          }),
     ]);

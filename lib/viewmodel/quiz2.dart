@@ -2,6 +2,7 @@ import 'package:ebidence/constant/aor.dart';
 import 'package:ebidence/constant/app_color.dart';
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
+import 'package:ebidence/view/result_card.dart';
 import 'package:ebidence/viewmodel/ebidence_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ class _QuizState extends ConsumerState<Quiz2> with TickerProviderStateMixin {
   final _feedback = ValueNotifier<String>('');
   bool isTextEnabled = true;
   bool _isButtonPressed = false; // Track if button is pressed
+  List<ResultCard> resultCards = [];
 
   late GifController _gifController;
   bool _isGifInitialized = false;
@@ -137,6 +139,10 @@ class _QuizState extends ConsumerState<Quiz2> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final currentQuestion = ref.watch(currentQuestionProvider);
     final double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceWidth = MediaQuery.of(context).size.width;
+
+    final resultCards = ref.watch(resultCardListProvider);
+
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(deviceHeight / 5),

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ebidence/routes.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -36,9 +37,6 @@ class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('画像表示'),
-      ),
       body: FutureBuilder(
         future: _downloadImage(),
         builder: (context, snapshot) {
@@ -54,12 +52,61 @@ class ResultPage extends StatelessWidget {
           }
 
           return Center(
-            child: Image.memory(
-              snapshot.data!,
+            child: Column(
+              children: [
+                Image.memory(
+                  snapshot.data!,
+                ),
+                _buildCustomButton(
+                  label: 'はじめる',
+                  onPressed: () {
+                    router.go('/beforequiz');
+                  },
+                ),
+              ],
             ),
           );
         },
       ),
     );
   }
+}
+
+Widget _buildCustomButton({
+  required String label,
+  required VoidCallback? onPressed,
+}) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(30),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 1, // 影の広がり
+          blurRadius: 4, // ぼかし具合
+          offset: const Offset(0, 4), // 影の位置（x, y）
+        ),
+      ],
+    ),
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFFFFA15E), // ボタンの背景色
+        foregroundColor: Colors.white, // テキストの色
+        minimumSize: const Size(200, 60), // ボタンのサイズ（幅と高さ）
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30), // 丸みの半径
+        ),
+        shadowColor: Colors.transparent, // ElevatedButton自身の影を無効化
+        elevation: 0, // ElevatedButton標準影をオフ
+      ),
+      onPressed: onPressed,
+      child: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 24, // テキストのサイズ
+          fontWeight: FontWeight.bold, // テキストの太さ
+        ),
+      ),
+    ),
+  );
 }
