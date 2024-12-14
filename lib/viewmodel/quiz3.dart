@@ -1,3 +1,4 @@
+import 'package:ebidence/constant/app_color.dart';
 import 'package:ebidence/constant/quiz_data.dart';
 import 'package:ebidence/routes.dart';
 import 'package:ebidence/viewmodel/ebidence_appbar.dart';
@@ -17,6 +18,7 @@ class _QuizState extends ConsumerState<Quiz3> {
   final _controller = TextEditingController();
   final _feedback = ValueNotifier<String>('');
   bool _isCorrect = false;
+  bool _isButtonPressed = false; // Track if button is pressed
 
   late VideoPlayerController _videoPlayerController;
   bool _isVideoInitialized = false;
@@ -116,61 +118,113 @@ class _QuizState extends ConsumerState<Quiz3> {
           child: const EbidenceAppbar()),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: [
-            const Text(
-              '次の単語を英語に翻訳してください:',
-              style: TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              currentQuestion,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: '答えを入力',
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    '英語　LEVEL1',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    '3 / 5',
+                    style: TextStyle(fontSize: 25, color: AppColor.text.gray),
+                  ),
+                  Text(
+                    currentQuestion,
+                    style: const TextStyle(
+                        fontSize: 150, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: 400,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300], // 背景色
+                      borderRadius: BorderRadius.circular(10), // 角丸
+                    ),
+                    child: TextField(
+                      cursorColor: AppColor.brand.secondary,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '回答を入力',
+                        hintStyle:
+                            TextStyle(color: AppColor.text.gray, fontSize: 30),
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: AppColor.text.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 80),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1, // 影の広がり
+                          blurRadius: 4, // ぼかし具合
+                          offset: const Offset(0, 4), // 影の位置（x, y）
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.brand.logo, // ボタンの背景色
+                        foregroundColor: Colors.white, // テキストの色
+                        minimumSize: const Size(200, 60), // ボタンのサイズ（幅と高さ）
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30), // 丸みの半径
+                        ),
+                        shadowColor:
+                            Colors.transparent, // ElevatedButton自身の影を無効化
+                        elevation: 0, // ElevatedButtonの標準影をオフ
+                      ),
+                      onPressed: _isButtonPressed
+                          ? null // Disable button if already pressed
+                          : () {
+                              setState(() {
+                                _isButtonPressed =
+                                    true; // Disable button on press
+                              });
+                              final mode = ref.read(modeProvider); // 現在のモードを取得
+                              if (mode == 'ebimode') {
+                                _checkAnswer(currentQuestion);
+                              } else if (mode == 'level1mode') {
+                                _l1CheckAnswer(currentQuestion);
+                              }
+                            },
+                      child: const Text(
+                        '回答',
+                        style: TextStyle(
+                          fontSize: 30, // テキストのサイズ
+                          fontWeight: FontWeight.bold, // テキストの太さ
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
               ),
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                final mode = ref.read(modeProvider); // 現在のモードを取得
-                if (mode == 'ebimode') {
-                  _checkAnswer(currentQuestion);
-                } else if (mode == 'level1mode') {
-                  _l1CheckAnswer(currentQuestion);
-                }
-              },
-              child: const Text('答えをチェック'),
-            ),
-            const SizedBox(height: 16),
-            ValueListenableBuilder<String>(
-              valueListenable: _feedback,
-              builder: (context, feedback, child) {
-                return Text(
-                  feedback,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: _isCorrect ? Colors.green : Colors.red,
-                  ),
-                  textAlign: TextAlign.center,
-                );
-              },
-            ),
-            const SizedBox(height: 16),
             if (_isVideoInitialized)
-              Container(
-                width: 200,
-                height: 150,
-                child: AspectRatio(
-                  aspectRatio: _videoPlayerController.value.aspectRatio,
-                  child: VideoPlayer(_videoPlayerController),
+              Align(
+                alignment: Alignment(1, 1),
+                child: Container(
+                  width: 200,
+                  height: 150,
+                  child: AspectRatio(
+                    aspectRatio: _videoPlayerController.value.aspectRatio,
+                    child: VideoPlayer(_videoPlayerController),
+                  ),
                 ),
               ),
             const Spacer(),

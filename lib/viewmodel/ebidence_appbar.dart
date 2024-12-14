@@ -41,17 +41,6 @@ class EbidenceAppbar extends StatelessWidget {
           ),
         ),
       ),
-      leading: IconButton(
-          style: buttonStyle,
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const AlertDialog();
-              },
-            );
-          },
-          icon: const Icon(Icons.arrow_back_rounded)),
       actions: [
         IconButton(
             style: buttonStyle,
