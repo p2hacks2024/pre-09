@@ -85,11 +85,11 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
       body: Stack(
         children: [
           //全問不正解用の画像作成処理↓
-          if (resultCardList.length == 5) PostImage(),
+          if (resultCardList.length == 5) const PostImage(),
           //最終結果画面の処理↓
           //ResultCardRow(),
           //全問不正解用の吹き出しの処理↓
-          _wrongSpeachBubble(),
+          if (resultCardList.length == 5) _wrongSpeachBubble(),
           //FlashCardの処理↓
           // if (isExistCards)
           //   GestureDetector(
@@ -129,9 +129,11 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
 
   Widget _wrongSpeachBubble() {
     return Center(
-      child: Column(
+      child: Stack(
         children: [
+          Image.asset('assets/images/hukidashi_big.png'),
           Text('wrongSpeachBubble'),
+          Container()
         ],
       ),
     );
