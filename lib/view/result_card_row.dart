@@ -23,150 +23,150 @@ class _ResultCardRowState extends ConsumerState<ResultCardRow> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(deviceHeight / 5),
           child: const EbidenceAppbar()),
-      body: Center(
-        child: Column(
-          children: [
-            Text(
-              '結果',
-              style: TextStyle(fontSize: 35),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
               children: [
-                Expanded(child: SizedBox()),
-                Center(
-                  child: Text(
-                    (5 - resultCardList.length).toString(),
-                    style: TextStyle(
-                      fontSize: 150,
-                      fontFamily: 'NotoSansJP-Bold',
-                      color: AppColor.text.black,
-                    ),
-                  ),
+                Text(
+                  '結果',
+                  style: TextStyle(fontSize: 35),
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 90,
-                      ),
-                      Text(
-                        '問正解！',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(child: SizedBox()),
+                    Center(
+                      child: Text(
+                        (5 - resultCardList.length).toString(),
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 150,
                           fontFamily: 'NotoSansJP-Bold',
                           color: AppColor.text.black,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    const Text(
-                      '間違えた問題',
-                      style: TextStyle(fontSize: 30),
                     ),
-                    if (resultCardList.isNotEmpty) ...[
-                      Row(
-                        children: [
-                          for (int i = 0; i < resultCardList.length; i++) ...[
-                            Container(
-                              width: 110,
-                              height: 90,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.black),
-                                color: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(5),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      resultCardList[i].question,
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      resultCardList[i].answer,
-                                      style: const TextStyle(
-                                          color: Colors.red, fontSize: 12),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            if (i < 4) SizedBox(width: 10),
-                          ],
-                        ],
-                      ),
-                    ] else
-                      const Center(
-                          child: Column(
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 20,
+                            height: 90,
                           ),
                           Text(
-                            'なし',
-                            style: TextStyle(fontSize: 20),
+                            '問正解！',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: 'NotoSansJP-Bold',
+                              color: AppColor.text.black,
+                            ),
                           ),
                         ],
-                      )),
-                  ],
-                ),
-                const SizedBox(
-                  width: 150,
-                ),
-                Column(
-                  children: [
-                    Image.asset(
-                      'images/evi_cam.png',
-                      height: 238,
+                      ),
                     ),
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        const Text(
+                          '間違えた問題',
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        if (resultCardList.isNotEmpty) ...[
+                          Row(
+                            children: [
+                              for (int i = 0;
+                                  i < resultCardList.length;
+                                  i++) ...[
+                                Container(
+                                  width: 110,
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: Colors.black),
+                                    color: Colors.white,
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          resultCardList[i].question,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text(
+                                          resultCardList[i].answer,
+                                          style: const TextStyle(
+                                              color: Colors.red, fontSize: 12),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                if (i < 4) SizedBox(width: 10),
+                              ],
+                            ],
+                          ),
+                        ] else
+                          const Center(
+                              child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'なし',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          )),
+                      ],
+                    ),
+                    SizedBox(
+                      width: deviceWidth / 3.5,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildCustomButton(
+                      label: 'つづける',
+                      onPressed: () {
+                        router.go('/beforequiz');
+                        print('つづけるボタンが押されました');
+                      },
+                    ),
+                    const SizedBox(width: 20), // ボタン間のスペース
+                    _buildCustomButton(
+                      label: 'やめる',
+                      onPressed: () {
+                        router.go('/');
+                        print('やめるボタンが押されました');
+                      },
+                    ),
+                  ],
+                ),
+                Text(
+                  '@ガリバタコーン',
+                  style:
+                      TextStyle(fontSize: 12, color: AppColor.brand.secondary),
+                ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildCustomButton(
-                  label: 'つづける',
-                  onPressed: () {
-                    router.go('/beforequiz');
-                    print('つづけるボタンが押されました');
-                  },
-                ),
-                const SizedBox(width: 20), // ボタン間のスペース
-                _buildCustomButton(
-                  label: 'やめる',
-                  onPressed: () {
-                    router.go('/');
-                    print('やめるボタンが押されました');
-                  },
-                ),
-              ],
-            ),
-            Text(
-              '@ガリバタコーン',
-              style: TextStyle(fontSize: 12, color: AppColor.brand.secondary),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

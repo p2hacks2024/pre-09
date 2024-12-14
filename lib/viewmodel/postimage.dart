@@ -34,10 +34,6 @@ class _PostImageState extends ConsumerState<PostImage> {
     super.initState();
     _updateContainerRef();
     debugPrint('a');
-    //_uploadContainerImageAndSaveToFirestore();
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //   await _uploadContainerImageAndSaveToFirestore();
-    // });
     debugPrint('b');
   }
 

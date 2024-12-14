@@ -55,6 +55,7 @@ class _QuizState extends ConsumerState<Quiz5> with TickerProviderStateMixin {
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
+      debugPrint('正解');
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       ref
@@ -66,6 +67,8 @@ class _QuizState extends ConsumerState<Quiz5> with TickerProviderStateMixin {
         question: currentQuestion,
         answer: correctAnswer.toString(),
       ));
+      debugPrint('aiueo::${resultCards.length.toString()}');
+      debugPrint('不正解');
     }
 
     if (_isGifInitialized) {

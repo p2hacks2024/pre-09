@@ -20,7 +20,7 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
   final _controller = TextEditingController();
   final _feedback = ValueNotifier<String>('');
   bool isTextEnabled = true;
-  List<ResultCard> resultCards = [];
+  final List<ResultCard> resultCards = [];
 // ボタンの状態を制御
   bool _isButtonPressed = false; // Track if button is pressed
 
@@ -56,6 +56,7 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
+      debugPrint('正解');
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       ref
@@ -67,6 +68,9 @@ class _QuizState extends ConsumerState<Quiz1> with TickerProviderStateMixin {
         question: currentQuestion,
         answer: correctAnswer.toString(),
       ));
+      debugPrint('不正解');
+      debugPrint('aiueo::${resultCards.length.toString()}');
+      debugPrint('aiueo::${resultCards.last.question}');
     }
 
     if (_isGifInitialized) {

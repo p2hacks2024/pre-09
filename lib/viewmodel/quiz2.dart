@@ -54,6 +54,7 @@ class _QuizState extends ConsumerState<Quiz2> with TickerProviderStateMixin {
     if (_controller.text.trim().toLowerCase() == correctAnswer?.toLowerCase()) {
       _feedback.value = '正解！';
       ref.read(quizResultProvider.notifier).update((state) => [...state, true]);
+      debugPrint('正解');
     } else {
       _feedback.value = '不正解。正しい答えは: $correctAnswer';
       ref
@@ -65,6 +66,9 @@ class _QuizState extends ConsumerState<Quiz2> with TickerProviderStateMixin {
         question: currentQuestion,
         answer: correctAnswer.toString(),
       ));
+      debugPrint('不正解');
+      debugPrint('aiueo::${resultCards.length.toString()}');
+      debugPrint('aiueo::${resultCards.last.question}');
     }
 
     if (_isGifInitialized) {
@@ -124,6 +128,8 @@ class _QuizState extends ConsumerState<Quiz2> with TickerProviderStateMixin {
     final currentQuestion = ref.watch(currentQuestionProvider);
     final double deviceHeight = MediaQuery.of(context).size.height;
     final double deviceWidth = MediaQuery.of(context).size.width;
+
+    final resultCards = ref.watch(resultCardListProvider);
 
     return Scaffold(
       appBar: PreferredSize(
