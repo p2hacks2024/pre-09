@@ -144,7 +144,7 @@ class _ResultCardRowState extends ConsumerState<ResultCardRow> {
                     _buildCustomButton(
                       label: 'つづける',
                       onPressed: () {
-                        router.go('/beforequiz');
+                        router.go('/selectsubject');
                         print('つづけるボタンが押されました');
                       },
                     ),

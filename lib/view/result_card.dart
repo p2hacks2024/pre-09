@@ -122,9 +122,9 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
 
       imageId = docRef.id;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('保存成功！ドキュメントID: ${docRef.id}')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('保存成功！ドキュメントID: ${docRef.id}')),
+      // );
       isSaveImage = true;
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -519,6 +519,25 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
               },
             ),
           ],
+          Align(
+              alignment: const Alignment(0.33, -0.55),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.orange, // ボタンの背景色をオレンジに設定
+                  borderRadius: BorderRadius.circular(8), // 少し丸みを帯びた四角いボタン
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.clear,
+                    color: Colors.white, // アイコンの色を白に設定
+                  ),
+                  padding: EdgeInsets.all(10), // ボタン内の余白
+                  iconSize: 30, // アイコンのサイズ調整
+                ),
+              )),
         ],
       ),
     );
