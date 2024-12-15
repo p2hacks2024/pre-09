@@ -57,12 +57,12 @@ class ResultPage extends StatelessWidget {
                 Image.memory(
                   snapshot.data!,
                 ),
-                _buildCustomButton(
-                  label: 'はじめる',
-                  onPressed: () {
-                    router.go('/beforequiz');
-                  },
-                ),
+                // _buildCustomButton(
+                //   label: 'はじめる',
+                //   onPressed: () {
+                //     router.go('/startpage');
+                //   },
+                // ),
               ],
             ),
           );
