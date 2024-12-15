@@ -89,7 +89,7 @@ class EbidenceAppbar extends StatelessWidget {
                               const Column(
                                 children: [
                                   SizedBox(
-                                    height: 200,
+                                    height: 100,
                                   ),
                                   Text('問題が全部で5問\n出題されるでんす。',
                                       style: TextStyle(fontSize: 30),
