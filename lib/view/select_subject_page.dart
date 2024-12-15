@@ -44,7 +44,7 @@ class _SelectSubjectPageState extends ConsumerState<SelectSubjectPage> {
                 child: GestureDetector(
                   onTap: () => _incrementTapCount(context), // タップでカウントを増やす
                   child: Image.asset(
-                    'evi_cam.png',
+                    'images/evi_cam.png',
                     width: 325,
                     height: 325,
                   ),
@@ -52,7 +52,7 @@ class _SelectSubjectPageState extends ConsumerState<SelectSubjectPage> {
               ),
               Center(
                 child: Image.asset(
-                  'ebimode_hukidashi.png',
+                  'images/ebimode_hukidashi.png',
                   width: 900,
                   height: 700,
                   fit: BoxFit.contain,
