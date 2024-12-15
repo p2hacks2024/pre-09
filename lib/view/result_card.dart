@@ -32,6 +32,7 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
   bool? isSaveImage; //TODO ローディングやってね！！！
   bool isPostPush = false;
   bool isPostX = false;
+  bool isPostCancel = false;
   String? imageId;
   String text = '';
   String url = '';
@@ -528,7 +529,8 @@ class _ResultFlashCard extends ConsumerState<ResultFlashCard>
                 ),
                 child: IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    isPostCancel = true;
+                    debugPrint('Postをキャンセルしようとしてる');
                   },
                   icon: const Icon(
                     Icons.clear,
