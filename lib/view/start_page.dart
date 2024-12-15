@@ -154,23 +154,23 @@ class _StartPageState extends State<StartPage> {
                                                 style: TextStyle(fontSize: 23),
                                               ),
                                               const Text(
-                                                "name　＠X",
+                                                "あいり　＠airi161205",
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                               const Text(
-                                                "name　＠X",
+                                                "Ruri　＠tea_cake3104",
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                               const Text(
-                                                "name　＠X",
+                                                "soda　＠soooda_0408",
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                               const Text(
-                                                "name　＠X",
+                                                "書記長　＠syokityouno58",
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                               const Text(
-                                                "name　＠X",
+                                                "まつよー　＠matsuyo_0811",
                                                 style: TextStyle(fontSize: 20),
                                               ),
                                             ],

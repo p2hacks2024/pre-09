@@ -73,34 +73,39 @@ class EbidenceAppbar extends StatelessWidget {
                     )),
                     const Align(
                       alignment: Alignment(0.3, 100),
-                      child: Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            height: 200,
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 200,
+                              ),
+                              Text('問題が全部で5問\n出題されるでんす。',
+                                  style: TextStyle(fontSize: 30),
+                                  textAlign: TextAlign.left),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                'わかったら\n回答を入力するでんす。',
+                                style: TextStyle(fontSize: 30),
+                                textAlign: TextAlign.left,
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text('入力が終わったら\n回答ボタンを押すでんす。',
+                                  style: TextStyle(fontSize: 30),
+                                  textAlign: TextAlign.left),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text('全問正解できるように\n頑張るでんす。',
+                                  style: TextStyle(fontSize: 30),
+                                  textAlign: TextAlign.left),
+                            ],
                           ),
-                          Text('問題が全部で5問\n出題されるでんす。',
-                              style: TextStyle(fontSize: 30),
-                              textAlign: TextAlign.left),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            'わかったら\n回答を入力するでんす。',
-                            style: TextStyle(fontSize: 30),
-                            textAlign: TextAlign.left,
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Text('入力が終わったら\n回答ボタンを押すでんす。',
-                              style: TextStyle(fontSize: 30),
-                              textAlign: TextAlign.left),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Text('全問正解できるように\n頑張るでんす。',
-                              style: TextStyle(fontSize: 30),
-                              textAlign: TextAlign.left),
                         ],
                       ),
                     ),
